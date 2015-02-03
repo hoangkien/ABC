@@ -8,7 +8,64 @@
 </head>
 <body>
 
-<%= yield %>
+
+<div id="wrapper">
+  <!-- header start-->
+  <div class="header">
+    <div class="fl"><a href="#"><%= image_tag ('templates/logo.png')%></a></div>
+    <div class="fr" style="padding-top:45px;"><span></span>Q.Co [<a href="#">login</a>]<span><%=  image_tag 'templates/icon_person.png'%></span><span>My</span></div>
+    <div class="cl"></div>
+    <!-- menu start-->
+    <div id="menu_nav" >
+      <ul>
+        <li class="start"><a class="active" style="border-left:none" href="#">Home</a></li>
+        <li><a href="#">Link1</a>
+          <ul >
+            <li><a href="#"> Sub link1</a></li>
+            <li><a href="#"> Sub link1</a></li>
+            <li><a href="#"> Sub link1</a></li>
+            <li><a href="#"> Sub link1</a></li>
+          </ul>
+        </li>
+        <li><a href="#" >Link2</a>
+          <ul >
+            <li><a href="#"> Sub link2</a></li>
+            <li><a href="#"> Sub link2</a></li>
+            <li><a href="#"> Sub link2</a></li>
+          </ul>
+        </li>
+        <li><a href="#">link 3</a></li>
+        <li><a href="#">link 4</a></li>
+        <li><a href="#">link 5</a></li>
+        <li><a style="border-right:none" href="#">link 6</a></li>
+      </ul>
+    </div>
+    <!-- menu end-->
+  </div>
+  <!-- header end-->
+  <div class="breadscrumb"><span>Breadscrumb</span><%= image_tag 'templates/brk_center.png'%><span><a href="#">Breadscrumb1</a></span></div>
+  <!--center start-->
+  <div id="center">
+    <!--left start-->
+
+    <!--left end-->
+    <!--right start-->
+
+    <%= yield %>
+    <!--right end-->
+    <div class="cl"></div>
+  </div>
+  <!--center end-->
+  <!--footer start-->
+  <div id="footer">
+    footer
+  </div>
+  <!--footer end-->
+
+
+</div>
+
+
 
 </body>
 </html>

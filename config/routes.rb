@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'session/new'
+
+  get 'session/create'
+
+  get 'session/destroy'
+
   resources :companies
 
   resources :feedbacks
@@ -12,6 +18,8 @@ Rails.application.routes.draw do
   resources :tours
 
   resources :users
+
+  root to:'session#new', as: :sign_in
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
