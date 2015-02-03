@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tourguide.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @tourguide.address %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @tourguide.phone %>
+</p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @tourguide.device_id %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @tourguide.active %>
+</p>
+
+<%= link_to 'Edit', edit_tourguide_path(@tourguide) %> |
+<%= link_to 'Back', tourguides_path %>

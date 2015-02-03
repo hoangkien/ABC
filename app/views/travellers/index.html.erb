@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Travellers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Device</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @travellers.each do |traveller| %>
+      <tr>
+        <td><%= traveller.name %></td>
+        <td><%= traveller.address %></td>
+        <td><%= traveller.phone %></td>
+        <td><%= traveller.device_id %></td>
+        <td><%= link_to 'Show', traveller %></td>
+        <td><%= link_to 'Edit', edit_traveller_path(traveller) %></td>
+        <td><%= link_to 'Destroy', traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Traveller', new_traveller_path %>
