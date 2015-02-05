@@ -1,6 +1,5 @@
 
-<div> Create a new Account </div>
-<%= form_for(@user) do |f| %>
+<div> Create a new Account <div>
 
 <table width="60%" class="new_form">
       <tr>
@@ -30,18 +29,13 @@
       </tr>
 <tr>
         <th> <%= f.label :group, 'Group' %></th>
-        <td>
-          <%= f.select(:group) do %>
-              <% User::GROUP.each do |g| -%>
-                  <%= content_tag(:option, g, value: g) %>
-              <% end %>
-          <% end %>
-        </td>
+        <td> <%= f.text_field :group %></td>
 	<td width='40%'> <%= @user.errors[:group][0] %></td>
       </tr>
       <tr>
         <th></th>
-        <td> <%= f.submit 'Sign Up', class: 'btn_small_blue' %> <%= f.submit 'Reset', type: :reset, class: 'btn_small_blue' %></td>
+        <td> <%= f.submit 'Sign Up' %>
+ <%= f.submit 'Reset', type: :reset %></td>
       </tr>
     </table>
 <% end %>

@@ -5,6 +5,14 @@ Rails.application.routes.draw do
 
   get 'session/destroy'
 
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
+  end
+
+  concern :searching do
+    get 'search', action: :search, on: :collection, as: :search
+  end
+
   resources :companies
 
   resources :feedbacks
@@ -17,9 +25,10 @@ Rails.application.routes.draw do
 
   resources :tours
 
-  resources :users
+  resources :users, :concerns => :paginatable
 
   root to:'session#new', as: :sign_in
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

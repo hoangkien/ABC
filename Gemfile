@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #gem for using mysql
 gem 'mysql2'
 
+#gem for pagination
+gem 'kaminari'
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 

@@ -1,0 +1,18 @@
+<div class="header">
+  <div class="fl"><a href="#"><%= image_tag ('templates/logo.png')%></a></div>
+  <div class="fr" style="padding-top:45px;"><span></span>Q.Co [<a href="#">login</a>]<span><%=  image_tag 'templates/icon_person.png'%></span><span>My</span></div>
+  <div class="cl"></div>
+  <!-- menu start-->
+  <div id="menu_nav" >
+    <ul>
+      <li class="start"><a class="active" style="border-left:none" href="#">Home</a></li>
+      <li> <%= link_to "User", users_path, method: :get%></li>
+      <li> <%= link_to "Company", companies_path, method: :get%></li>
+      <li> <%= link_to "Device", devices_path, method: :get%></li>
+      <li> <%= link_to "Tour", tours_path, method: :get%></li>
+      <li> <%= link_to "Traveller", travellers_path, method: :get%></li>
+      <li> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
+    </ul>
+  </div>
+  <!-- menu end-->
+</div>
