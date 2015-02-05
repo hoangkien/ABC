@@ -3,8 +3,9 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   # GET /companies.json
+
   def index
-    @companies = Company.all
+    @companies = Company.order(:name).page(params[:page])
   end
 
   # GET /companies/1
@@ -15,6 +16,7 @@ class CompaniesController < ApplicationController
   # GET /companies/new
   def new
     @company = Company.new
+    @company.code = Company.generate_company_code
   end
 
   # GET /companies/1/edit
@@ -24,8 +26,9 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params)
-
+    new_params = company_params
+    new_params[:code] = Company.generate_company_code
+    @company = Company.new(new_params)
     respond_to do |format|
       if @company.save
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
@@ -69,6 +72,6 @@ class CompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
-      params.require(:company).permit(:name, :address, :code)
+     params.require(:company).permit(:name, :address)
     end
 end

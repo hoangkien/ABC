@@ -130,13 +130,17 @@ border-radius: 3px; font-weight:bold; line-height:20px; }
 .tblForm th,{ background:#f1f1f1;border:1px solid #c5c5c5; padding:7px; font-weight:bold; vertical-align:top; text-align:right;}
 .tblForm td{ border:1px solid #c5c5c5; padding:7px;}
 
-.signin_form td, .signin_form th, .new_form td, .new_form th{
+.signin_form td, .signin_form th, .new_form td, .new_form th, .show_data td{
     padding: 7px;
     text-align:right;
 }
 .new_form td{
    text-align:left;
    color:red;
+}
+.show_data td{
+    text-align:left;
+    font-size: 14px;
 }
 #footer{ background:#ecebeb;border:1px solid #929191; border-top:none;  padding:10px; }
 
@@ -148,10 +152,11 @@ border-radius: 3px; font-weight:bold; line-height:20px; }
 }
 .search_form{
     float: left;
-    display: inline-block;
+    /*display: inline-block;*/
 }
-.action_button{
+.action_button form{
     float: right;
+    display: inline-block;
 }
 .paginate{
     text-align: center;

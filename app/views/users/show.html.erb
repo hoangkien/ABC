@@ -1,29 +1,28 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Account:</strong>
-  <%= @user.account %>
-</p>
+<div class="top_in_center">
+        <div class="action_button">
+            <%= button_to 'Edit', edit_user_path(@user), class: 'btn_small_blue', method: :get %>
+            <%= button_to  'Back', users_path, class: 'btn_small_blue', method: :get %>
+        </div>
+</div>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>Group:</strong>
-  <%= @user.group %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<table width="40%" class="show_data">
+  <tr>
+    <th width="15%">    <strong>Account:</strong></th>
+    <td width="20%"> <%= @user.account %></td>
+  </tr>
+  <tr>
+    <th><strong>Name:</strong></th>
+    <td> <%= @user.name %></td>
+  </tr>
+  <tr>
+    <th> <strong>Address:</strong></th>
+    <td>  <%= @user.name %></td>
+  </tr>
+  <tr>
+    <th>  <strong>Group:</strong></th>
+    <td>
+      <%= @user.group %>
+    </td>
+  </tr>
+</table>
