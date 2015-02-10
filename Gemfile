@@ -26,6 +26,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #gem for using mysql
 gem 'mysql2'
 
+# gem for creating form easily
+gem 'simple_form'
+
+#gem for selecting country
+gem 'country_select'
+
 #gem for pagination
 gem 'kaminari'
 

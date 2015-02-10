@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
+  belongs_to :company
 	GROUP = [:admin, :company]
-   	has_secure_password
+  has_secure_password
 	validates :account, :password, :password_confirmation, :name,:address, presence: true, on: :create
   validates :account, :name, :address, presence: true, on: :update
 	validates :account, uniqueness: true, length: { minimum: 6 }, on: :create
@@ -10,5 +11,7 @@ class User < ActiveRecord::Base
     # where(:title, query) -> This would return an exact match of the query
     where("account like ?", "%#{query}%")
   end
+
+
 
 end

@@ -25,7 +25,10 @@ Rails.application.routes.draw do
 
   resources :tours
 
-  resources :users, :concerns => :paginatable
+  resources :users, :concerns => :paginatable do
+    get 'edit_password', on: :member
+    post 'update_password', on: :member
+  end
 
   root to:'session#new', as: :sign_in
 

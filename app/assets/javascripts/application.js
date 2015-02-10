@@ -14,3 +14,30 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function() {
+
+    console.log(1)
+    //
+    //changeGroup();
+    //if($("#center .new_form #user_group").val() =='company'){
+    //    $("#center .new_form #user_company_id").css("display","");
+    //}else{
+    //    $("#center .new_form #user_company_id").css("display","none");
+    //}
+    $("#center .new_form #user_company_id").css("display","none");
+    $("#center .new_form #user_group").change(changeGroup);
+
+    function changeGroup(){
+        console.log(2);
+        console.log($("#center .new_form #user_group").val());
+
+        if($("#center .new_form #user_group").val() =='company'){
+            $("#center .new_form #user_company_id").css("display","");
+        }else{
+            $("#center .new_form #user_company_id").css("display","none");
+        }
+    }
+});
+
+

@@ -1,16 +1,17 @@
 class Company < ActiveRecord::Base
+  has_one :user
   require 'securerandom'
 
-  before_create :generate_code
-  def generate_code
-    # params[:code] = Company.generate_company_code
-  end
+  validates :name, :address, presence: true
 
   def self.generate_company_code
     begin
       code = SecureRandom.hex(6)
     end while Company.find_by_code(code)
     code
+  end
+  def self.get_all_company
+    Company.select(:id,:name)
   end
 
 end

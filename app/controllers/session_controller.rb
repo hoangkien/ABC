@@ -8,9 +8,12 @@ class SessionController < ApplicationController
   def create
     user = User.find_by_account(params[:account])
     if user and user.authenticate(params[:password])
-      session[:account]=  user.account
+
+      # session[:user]=  {:id => user.id, :account => user.account,:group => user.group}
+      session[:account]= user.account
+      session[:group] =  user.group
       redirect_to users_url
-      else
+    else
         redirect_to sign_in_path, alert: "Invalid user/password combination"
     end
 
@@ -18,6 +21,7 @@ class SessionController < ApplicationController
 
   def destroy
     session[:account] = nil
+    session[:group] = nil
     redirect_to sign_in_url
   end
 end

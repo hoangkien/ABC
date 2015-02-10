@@ -5,7 +5,7 @@
 <table width="60%" class="new_form">
       <tr>
         <th width="15%">   <%= f.label :account, 'Account' %></th>
-        <td width="20%"> <%= f.text_field :account %></td>
+        <td width="50%"> <%= f.text_field :account %></td>
 	<td width='40%'> <%= @user.errors[:account][0] %></td>
       </tr>
       <tr>
@@ -36,6 +36,9 @@
                   <%= content_tag(:option, g, value: g) %>
               <% end %>
           <% end %>
+
+          <%= f.select(:company_id, options_for_select(Company.get_all_company.collect{|c| [ c.name, c.id ]}),{ :include_blank => false,style: 'display: none'}) %>
+
         </td>
 	<td width='40%'> <%= @user.errors[:group][0] %></td>
       </tr>

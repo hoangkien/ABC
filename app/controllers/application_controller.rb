@@ -12,4 +12,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # def self.destroy(object, url)
+  #   object.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to url, notice: 'Device was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
 end

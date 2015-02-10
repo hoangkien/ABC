@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204122738) do
+ActiveRecord::Schema.define(version: 20150206014812) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
+    t.text     "address",    limit: 65535
     t.string   "code",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "devices", force: :cascade do |t|
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 20150204122738) do
 
   create_table "tourguides", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
+    t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
     t.integer  "device_id",  limit: 4
     t.boolean  "active",     limit: 1
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "tourguides_tours", id: false, force: :cascade do |t|
@@ -74,21 +74,21 @@ ActiveRecord::Schema.define(version: 20150204122738) do
 
   create_table "travellers", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
+    t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
     t.integer  "device_id",  limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "account",         limit: 255
     t.string   "password_digest", limit: 255
     t.string   "name",            limit: 255
-    t.string   "address",         limit: 255
+    t.text     "address",         limit: 65535
     t.string   "group",           limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "company_id",      limit: 4
   end
 

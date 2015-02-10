@@ -57,6 +57,7 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1
   # DELETE /companies/1.json
   def destroy
+    # ApplicationController.destroy(@company,:companies_url)
     @company.destroy
     respond_to do |format|
       format.html { redirect_to companies_url, notice: 'Company was successfully destroyed.' }

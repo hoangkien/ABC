@@ -2,7 +2,11 @@
   <div class="fl"><a href="#"><%= image_tag ('templates/logo.png')%></a></div>
   <div class="fr" style="padding-top:45px;"><span></span>
     <% if session[:account]%>
-    <%=  image_tag 'templates/icon_person.png'%> Hello,&nbsp;<%= session[:account]%> &nbsp;[<%= link_to 'Sign_out', sign_out_path, method: :delete, data: { confirm: 'Are you sure?' } %>]
+    <%=  image_tag 'templates/icon_person.png'%> Hello,&nbsp;<%= session[:account]%>
+        &nbsp; [<%= link_to 'Profile',User.find_by_account(session[:account]),  method: :get %>]
+        &nbsp;[<%= link_to 'Change password', edit_password_user_path(User.find_by_account(session[:account])), method: :get %>]
+        &nbsp;[<%= link_to 'Sign_out', sign_out_path, method: :delete, data: { confirm: 'Are you sure?' } %>]
+
     <% else %>
     [<%= link_to 'Sign_in', sign_in_path %>]
      <% end %>
@@ -11,13 +15,20 @@
   <!-- menu start -->
   <div id="menu_nav" >
     <ul>
-      <li class="start"><a class="active" style="border-left:none" href="#">Home</a></li>
-      <li> <%= link_to "User", users_path, method: :get%></li>
-      <li> <%= link_to "Company", companies_path, method: :get%></li>
-      <li> <%= link_to "Device", devices_path, method: :get%></li>
-      <li> <%= link_to "Tour", tours_path, method: :get%></li>
-      <li> <%= link_to "Traveller", travellers_path, method: :get%></li>
-      <li> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
+      <% if session[:user][:group] =='admin'%>
+          <li class="start"><a class="active" style="border-left:none" href="#">Home</a></li>
+          <li> <%= link_to "User", users_path, method: :get%></li>
+          <li> <%= link_to "Company", companies_path, method: :get%></li>
+          <li> <%= link_to "Device", devices_path, method: :get%></li>
+          <li> <%= link_to "Tour", tours_path, method: :get%></li>
+          <li> <%= link_to "Traveller", travellers_path, method: :get%></li>
+          <li> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
+      <%else%>
+          <li> <%= link_to "Device", devices_path, method: :get%></li>
+          <li> <%= link_to "Tour", tours_path, method: :get%></li>
+          <li> <%= link_to "Traveller", travellers_path, method: :get%></li>
+          <li> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
+      <%end%>
     </ul>
   </div>
   <!-- menu end-->
