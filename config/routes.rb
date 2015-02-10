@@ -31,6 +31,17 @@ Rails.application.routes.draw do
   end
 
   root to:'session#new', as: :sign_in
+  
+  get "api/devices" => "api/devices#show"
+  post "api/devices/add" =>"api/devices#add"
+  get "api/users/list" => "api/users#list"
+  post "api/users/update_position" => "api/users#update_position"
+  post "api/users/feedback" => "api/users#feedback"
+  namespace :api do
+    resource :users , only: :show
+    resource :devices
+    
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.

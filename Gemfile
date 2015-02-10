@@ -34,6 +34,7 @@ gem 'country_select'
 
 #gem for pagination
 gem 'kaminari'
+#gem 'rails-api'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'

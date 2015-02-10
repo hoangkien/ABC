@@ -22,7 +22,10 @@
         <td>
           <%= f.select :group, options_for_select([["admin", "admin"], ["company", "company"]],  @user.group) %>
 
-          <%= f.select(:company_id, options_for_select(Company.get_all_company.collect{|c| [ c.name, c.id ]}),{ :include_blank => false,style: 'display: none'}) %>
+          <%= if @user.group == "company"
+                f.select :company_id, options_for_select(Company.get_all_company.collect{|c| [ c.name, c.id ]},@user.company.name)
+              end
+          %>
 
         </td>
         <td width='40%'> <%= @user.errors[:group][0] %></td>

@@ -12,10 +12,10 @@
 development:
     encoding: utf8
     adapter: mysql2
-    database: db_tourism_app
+    database: db_tourism_app2
     pool: 5
     user: root
-    password: 132456
+    password: 1
     socket: /var/run/mysqld/mysqld.sock
     reconnect: false
 

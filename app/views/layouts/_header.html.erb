@@ -15,7 +15,7 @@
   <!-- menu start -->
   <div id="menu_nav" >
     <ul>
-      <% if session[:user][:group] =='admin'%>
+      <% if session[:group] =='admin'%>
           <li class="start"><a class="active" style="border-left:none" href="#">Home</a></li>
           <li> <%= link_to "User", users_path, method: :get%></li>
           <li> <%= link_to "Company", companies_path, method: :get%></li>
