@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :companies
 
-  resources :feedbacks
+  resources :feedbacks, only: [:index,:show]
 
   resources :tourguides
 
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :users, :concerns => :paginatable do
     get 'edit_password', on: :member
     post 'update_password', on: :member
+    get 'company_profile'
   end
 
   root to:'session#new', as: :sign_in

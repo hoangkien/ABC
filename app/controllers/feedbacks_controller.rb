@@ -4,7 +4,11 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    if params[:search]
+      @feedbacks = Feedback.search(params[:search]).order("created_at DESC").page(params[:page])
+    else
+      @feedbacks = Feedback.order(:traveller_id).page(params[:page])
+    end
   end
 
   # GET /feedbacks/1

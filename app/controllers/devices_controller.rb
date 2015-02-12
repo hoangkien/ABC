@@ -4,7 +4,12 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    @devices = Device.all
+    if params[:search]
+      @devices = Device.search(params[:search]).order("created_at DESC").page(params[:page])
+    else
+      @devices = Device.order(:name).page(params[:page])
+    end
+    
   end
 
   # GET /devices/1

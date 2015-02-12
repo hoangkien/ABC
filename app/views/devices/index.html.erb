@@ -1,33 +1,48 @@
-<p id="notice"><%= notice %></p>
+<div class="top_in_center">
+  <div class="search_form">
+    <%= form_tag devices_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
+          <%= submit_tag "Search",class:'btn_small_blue', :name => nil %>
+              </p>
+          <% end %>
 
-<h1>Listing Devices</h1>
+          </div>
+          <div class="action_button">
+            <%= button_to 'New device', new_device_path, method: 'get', class:'btn_medium_blue' %>
+                </div>
+                </div>
+                <div class="cl"></div>
+                <% if notice %>
+                    <p class="msgBlue"><%= notice %></p>
+                <% end    %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Lat</th>
-      <th>Lng</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @devices.each do |device| %>
-      <tr>
-        <td><%= device.name %></td>
-        <td><%= device.status %></td>
-        <td><%= device.lat %></td>
-        <td><%= device.lng %></td>
-        <td><%= link_to 'Show', device %></td>
-        <td><%= link_to 'Edit', edit_device_path(device) %></td>
-        <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Device', new_device_path %>
+                <table width="100%" class="tblList">
+                  <tr>
+                    <th width="18%">Device Name </th>
+                    <th width="15%">Company</th>
+                    <th width="3%">Status</th>
+                    <th width="15%">Lat</th>
+                    <th width="15%">Lng</th>
+                    <th width="10%">Create at</th>
+                    <th width="10%">Updated at</th>
+                    <th width="10%">Action</th>
+                  </tr>
+                  <% @devices.each do |device| %>
+                      <tr>
+                        <td><%= device.name %></td>
+                        <td><%= Company.find(device.company_id).name%></td>
+                        <td><%= device.status %></td>
+                        <td><%= device.lat %></td>
+                        <td><%= device.lng%></td>
+                        <td><%= device.created_at.strftime("%d/%m/%Y") if not device.created_at == nil %></td>
+                        <td><%= device.updated_at.strftime("%d/%m/%Y") if not device.updated_at == nil %></td>
+                        <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,device %>
+                          <%= link_to image_tag('templates/edit.png') ,edit_device_path(device) %>
+                          <%= link_to image_tag('templates/Delete.png'), device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                      </tr>
+                  <% end %>
+                </table>
+                <!--table end-->
+                <br>
+                <div class="paginate"> <%= paginate @devices %> </div>

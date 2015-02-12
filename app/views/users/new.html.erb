@@ -2,10 +2,10 @@
 <div> Create a new Account </div>
 <%= form_for(@user) do |f| %>
 
-<table width="60%" class="new_form">
+<table width="70%" class="new_form">
       <tr>
-        <th width="15%">   <%= f.label :account, 'Account' %></th>
-        <td width="50%"> <%= f.text_field :account %></td>
+        <th width="30%">   <%= f.label :account, 'Account' %></th>
+        <td width="35%"> <%= f.text_field :account %></td>
 	<td width='40%'> <%= @user.errors[:account][0] %></td>
       </tr>
       <tr>
@@ -36,13 +36,21 @@
                   <%= content_tag(:option, g, value: g) %>
               <% end %>
           <% end %>
-
-          <%= f.select(:company_id, options_for_select(Company.get_all_company.collect{|c| [ c.name, c.id ]}),{ :include_blank => false,style: 'display: none'}) %>
-
         </td>
-	<td width='40%'> <%= @user.errors[:group][0] %></td>
-      </tr>
-      <tr>
+	   <td width='40%'> <%= @user.errors[:group][0] %></td>
+    </tr>
+    <tbody class="company" style="display:none">
+    <tr>
+      <th><%= f.label :company, "Company Name" %></th>
+      <td><%= text_field_tag'user[company_name]' %></td>
+      <td width='40%'></td>
+    </tr>
+    <tr>
+      <th><%= f.label :company_address, "Company Address" %></th>
+      <td><%= text_field_tag'user[company_address]'%></td>
+    </tr>
+    </tbody>
+    <tr>
         <th></th>
         <td> <%= f.submit 'Sign Up', class: 'btn_small_blue' %> <%= f.submit 'Reset', type: :reset, class: 'btn_small_blue' %></td>
       </tr>

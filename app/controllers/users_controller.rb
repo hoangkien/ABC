@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password, :update_password]
+  # before_action :check_permission ,only: [:destroy,]
 
   # GET /users
   # GET /users.json
@@ -40,7 +41,10 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    company = Company.create(name:company_params[:company_name],address:company_params[:company_address])
+    @user_params = user_params
+    @user_params[:company_id] = Company.last.id
+    @user = User.new(@user_params)
 
     respond_to do |format|
       if @user.save
@@ -78,14 +82,20 @@ class UsersController < ApplicationController
   end
 
   def edit_password
-    # @user =  ChangePasswordForm()
+      @password = User.find(params[:id]).password
   end
 
   def update_password
 
+    @user.update(user_params_for_changing_password)
+    redirect_to users_path
   end
-
   private
+    def check_permission
+      if session[:group] == 'company'
+          redirect_to devices_path
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -93,12 +103,15 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group, :company_id)
+      params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group)
+    end
+    def company_params
+      params.require(:user).permit(:company_name,:company_address)
     end
     def user_params_for_updating
       params.require(:user).permit(:name, :address, :group)
     end
   def user_params_for_changing_password
-    params.require(:user).permit(:old_password, :new_password, :password_confirmation)
+    params.require(:user).permit( :password, :password_confirmation)
   end
 end

@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, only: [:index,:destroy]
 
   # GET /companies
   # GET /companies.json
@@ -21,6 +22,9 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
+    if params[:id].to_s != session[:company_id].to_s
+      redirect_to edit_company_path(session[:company_id])
+    end
   end
 
   # POST /companies
@@ -74,5 +78,10 @@ class CompaniesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
      params.require(:company).permit(:name, :address)
+    end
+    def require_admin
+      if session[:group] == 'company'
+          redirect_to edit_company_path(session[:company_id])
+      end
     end
 end

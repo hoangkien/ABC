@@ -3,8 +3,8 @@
 
     <table width="60%" class="new_form">
       <tr>
-        <th width="15%">   <%= f.label :account, 'Account' %></th>
-        <td width="20%"> <%= f.text_field :account, disabled: true %></td>
+        <th width="20%">   <%= f.label :account, 'Account' %></th>
+        <td width="30%"> <%= f.text_field :account, disabled: true %></td>
         <td width='40%'> <%= @user.errors[:account][0] %></td>
       </tr>
       <tr>
@@ -20,16 +20,21 @@
       <tr>
         <th> <%= f.label :group, 'Group' %></th>
         <td>
-          <%= f.select :group, options_for_select([["admin", "admin"], ["company", "company"]],  @user.group) %>
-
-          <%= if @user.group == "company"
-                f.select :company_id, options_for_select(Company.get_all_company.collect{|c| [ c.name, c.id ]},@user.company.name)
-              end
-          %>
-
+          <%= f.select :group, options_for_select([["admin", "admin"], ["company", "company"]],  @user.group)%>
+        </td>
+      </tr>
+      <tbody class="company">
+      <tr>
+        <th><%= f.label :company, "Company Name" %></th>
+        <td> <%= if @user.group == "company" && @user.company_id
+                  f.text_field :company, value: @user.company.name
+                 else
+                  f.text_field :company, value:""
+                 end %>
         </td>
         <td width='40%'> <%= @user.errors[:group][0] %></td>
       </tr>
+      </tbody>
       <tr>
         <th></th>
         <td> <%= f.submit 'Update', class: 'btn_small_blue'%> <%= f.submit 'Reset', type: :reset, class: 'btn_small_blue' %></td>

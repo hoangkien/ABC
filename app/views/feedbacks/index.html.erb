@@ -1,31 +1,40 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Feedbacks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Quantiy service</th>
-      <th>Comment</th>
-      <th>Traveller</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @feedbacks.each do |feedback| %>
-      <tr>
-        <td><%= feedback.quantiy_service %></td>
-        <td><%= feedback.comment %></td>
-        <td><%= feedback.traveller_id %></td>
-        <td><%= link_to 'Show', feedback %></td>
-        <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
-        <td><%= link_to 'Destroy', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="top_in_center">
+  <div class="search_form">
+    <%= form_tag feedbacks_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
+          <%= submit_tag "Search",class:'btn_small_blue', :name => nil %>
+        </p>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+  </div>
+</div>
+      <div class="cl"></div>
+     <% if notice %>
+      <p class="msgBlue"><%= notice %></p>
+      <% end    %>
 
-<%= link_to 'New Feedback', new_feedback_path %>
+    <table width="100%" class="tblList">
+      <tr>
+        <th width="10%">Traveller </th>
+        <th width="15%">Quantity Service</th>
+        <th width="20%">Comment</th>
+        <th width="10%">Created at</th>
+        <th width="10%">Updated at</th>
+        <th width="10%">Action</th>
+      </tr>
+      <% @feedbacks.each do |feedback| %>
+          <tr>
+            <td><%= Traveller.find(feedback.traveller_id).name %></td>
+            <td><%= feedback.quantiy_service %></td>
+            <td><%= truncate(strip_tags(feedback.comment),length: 80)%></td>
+            <td><%= feedback.created_at.strftime("%d/%m/%Y") if not feedback.created_at == nil %></td>
+            <td><%= feedback.updated_at.strftime("%d/%m/%Y") if not feedback.updated_at == nil %></td>
+            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,feedback %>
+          </tr>
+      <% end %>
+    </table>
+      <!--table end-->
+      <br><div class="paginate"> <%= paginate @feedbacks %> </div>
+

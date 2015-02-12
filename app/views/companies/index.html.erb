@@ -26,7 +26,7 @@
                     <th width="15%">Created at</th>
                     <th width="20%">Updated at</th>
                     <th width="10%">Action</th>
-                  </tr>11
+                  </tr>
                   <% @companies.each do |company| %>
                       <tr>
                         <td><%= company.name %></td>
@@ -34,7 +34,7 @@
                         <td><%= company.code %></td>
                         <td><%= company.created_at.strftime("%d/%m/%Y") %></td>
                         <td><%= company.updated_at.strftime("%d/%m/%Y") %></td>
-                        <td><%= link_to image_tag('templates/view_icon.ico') ,company %>
+                        <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,company %>
                           <%= link_to image_tag('templates/edit.png') ,edit_company_path(company) %>
                           <%= link_to image_tag('templates/Delete.png'), company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                       </tr>

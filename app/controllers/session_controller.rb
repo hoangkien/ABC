@@ -1,4 +1,5 @@
 class SessionController < ApplicationController
+  require'digest/md5'
   skip_before_action :authorize #, only: [:create]
   def new
     @user =  User.new
@@ -6,12 +7,14 @@ class SessionController < ApplicationController
   end
 
   def create
-    user = User.find_by_account(params[:account])
-    if user and user.authenticate(params[:password])
-
+    user = User.login(params[:account],Digest::MD5.hexdigest(params[:password]))
+    if user
       # session[:user]=  {:id => user.id, :account => user.account,:group => user.group}
       session[:account]= user.account
       session[:group] =  user.group
+      if user.group == 'company'
+        session[:company_id] = user.company_id
+      end
       redirect_to users_url
     else
         redirect_to sign_in_path, alert: "Invalid user/password combination"

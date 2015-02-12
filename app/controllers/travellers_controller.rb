@@ -4,7 +4,11 @@ class TravellersController < ApplicationController
   # GET /travellers
   # GET /travellers.json
   def index
-    @travellers = Traveller.all
+    if params[:search]
+      @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
+    else
+      @travellers = Traveller.order(:name).page(params[:page])
+    end
   end
 
   # GET /travellers/1

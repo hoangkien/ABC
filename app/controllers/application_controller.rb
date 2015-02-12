@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
        redirect_to sign_in_path, alert: "please sign in first!"
     end
   end
-
   # def self.destroy(object, url)
   #   object.destroy
   #   respond_to do |format|

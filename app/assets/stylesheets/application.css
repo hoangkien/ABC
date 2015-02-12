@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+#center .signin_form .error{
+	color:red;
+}

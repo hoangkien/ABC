@@ -4,7 +4,11 @@ class TourguidesController < ApplicationController
   # GET /tourguides
   # GET /tourguides.json
   def index
-    @tourguides = Tourguide.all
+    if params[:search]
+      @tourguides = Tourguide.search(params[:search]).order("created_at DESC").page(params[:page])
+    else
+      @tourguides = Tourguide.order(:name).page(params[:page])
+    end
   end
 
   # GET /tourguides/1
