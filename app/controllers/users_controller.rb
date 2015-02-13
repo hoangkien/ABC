@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password, :update_password]
-  # before_action :check_permission ,only: [:destroy,]
+   before_action :check_permission ,only: [:index,:destroy,]
 
   # GET /users
   # GET /users.json
@@ -41,27 +41,36 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    company = Company.create(name:company_params[:company_name],address:company_params[:company_address])
     @user_params = user_params
-    @user_params[:company_id] = Company.last.id
-    @user = User.new(@user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to users_url, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+    if user_params["group"] == 'company'
+      if company_params[:name].blank?
+        check_company = Company.where(name:company_params[:name]).first
+        if check_company
+          new_params_company = company_params
+          new_params_company[:code] = Company.generate_company_code
+          @user_params[:company_id] = Company.last.id
+        else
+          @company_errors=" Da ton tai"
+        end
       else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        @company_errors = "Can't be blank"
       end
     end
-  end
+    @company = Company.new( new_params_company)
+    @user = User.new(@user_params)
+    if @user.save
+         redirect_to users_url, notice: 'User was successfully created.' 
+      else
+         render :new 
+      end
+    end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params_for_updating)
+
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -86,7 +95,6 @@ class UsersController < ApplicationController
   end
 
   def update_password
-
     @user.update(user_params_for_changing_password)
     redirect_to users_path
   end
@@ -106,10 +114,10 @@ class UsersController < ApplicationController
       params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group)
     end
     def company_params
-      params.require(:user).permit(:company_name,:company_address)
+      params.require(:company).permit(:name,:address)
     end
     def user_params_for_updating
-      params.require(:user).permit(:name, :address, :group)
+      params.require(:user).permit(:name, :address, :group,:gender,:email)
     end
   def user_params_for_changing_password
     params.require(:user).permit( :password, :password_confirmation)

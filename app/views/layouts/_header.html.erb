@@ -21,20 +21,20 @@
   <div id="menu_nav" >
     <ul>
       <% if session[:group] =='admin'%>
-          <li class="start"><a style="border-left:none" href="#">Home</a></li>
+<!--           <li class="starts"><a style="border-left:none" href="#">Home</a></li> -->
           <li class="users"> <%= link_to "User", users_path, method: :get%></li>
           <li class="companies"> <%= link_to "Company", companies_path, method: :get%></li>
           <li class="devices"> <%= link_to "Device", devices_path, method: :get%></li>
           <li class="tours"> <%= link_to "Tour", tours_path, method: :get%></li>
-          <li class="traveller"> <%= link_to "Traveller", travellers_path, method: :get%></li>
+          <li class="travellers"> <%= link_to "Traveller", travellers_path, method: :get%></li>
           <li class="tourguides"> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
-          <li><%= link_to "Feedback",feedbacks_path%></li>
+          <li><%= link_to "feedbacks",feedbacks_path%></li>
       <%else%>
-          <li> <%= link_to "Device", devices_path, method: :get%></li>
-          <li> <%= link_to "Tour", tours_path, method: :get%></li>
-          <li> <%= link_to "Traveller", travellers_path, method: :get%></li>
-          <li> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
-          <li><%= link_to "Feedback",feedbacks_path%></li>
+          <li class="devices"> <%= link_to "Device", devices_path, method: :get%></li>
+          <li class="tours"> <%= link_to "Tour", tours_path, method: :get%></li>
+          <li class="travellers"> <%= link_to "Traveller", travellers_path, method: :get%></li>
+          <li class="tourguides"> <%= link_to "Tourguide", tourguides_path, method: :get, style: 'border-right:none' %></li>
+          <li class="feedbacks"><%= link_to "Feedback",feedbacks_path%></li>
       <%end%>
     </ul>
   </div>

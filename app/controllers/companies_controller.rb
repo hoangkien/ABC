@@ -6,7 +6,11 @@ class CompaniesController < ApplicationController
   # GET /companies.json
 
   def index
-    @companies = Company.order(:name).page(params[:page])
+    if params[:search]
+      @companies = Company.search(params[:search]).order("created_at DESC").page(params[:page])
+    else
+      @companies = Company.order(:name).page(params[:page])
+    end
   end
 
   # GET /companies/1
@@ -22,8 +26,10 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
-    if params[:id].to_s != session[:company_id].to_s
-      redirect_to edit_company_path(session[:company_id])
+    if session[:group] =='company'
+      if params[:id].to_s != session[:company_id].to_s
+        redirect_to edit_company_path(session[:company_id])
+      end
     end
   end
 
@@ -35,7 +41,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(new_params)
     respond_to do |format|
       if @company.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
+        format.html { redirect_to companies_url, notice: 'Company was successfully created.' }
         format.json { render :show, status: :created, location: @company }
       else
         format.html { render :new }
@@ -49,7 +55,7 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        format.html { redirect_to companies_url, notice: 'Company was successfully updated.' }
         format.json { render :show, status: :ok, location: @company }
       else
         format.html { render :edit }

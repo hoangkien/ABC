@@ -1,5 +1,18 @@
-
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#center .new_form #Sign_Up").click(function(){
+      if($("#center .new_form #user_group").val()=='company'){
+        var company_name =$("#center .new_form #user_company_name").val();
+        if(company_name.trim()==0){
+          $("#center .new_form #error_comp").html("Can't Blank");
+          return false;
+        }
+      }
+    });
+  });
+</script>
 <div> Create a new Account </div>
+<span><%= @company_errors if @company_errors %></span>
 <%= form_for(@user) do |f| %>
 
 <table width="70%" class="new_form">
@@ -31,28 +44,24 @@
 <tr>
         <th> <%= f.label :group, 'Group' %></th>
         <td>
-          <%= f.select(:group) do %>
-              <% User::GROUP.each do |g| -%>
-                  <%= content_tag(:option, g, value: g) %>
-              <% end %>
-          <% end %>
+          <%= f.select(:group,options_for_select([["Admin", "admin"], ["Company", "company"]], @user_params ? @user_params[:group] : "admin")) %>
         </td>
 	   <td width='40%'> <%= @user.errors[:group][0] %></td>
     </tr>
-    <tbody class="company" style="display:none">
+    <tbody class="company">
     <tr>
       <th><%= f.label :company, "Company Name" %></th>
-      <td><%= text_field_tag'user[company_name]' %></td>
-      <td width='40%'></td>
+      <td><%= text_field_tag'company[name]',  @company_params ? @company_name[:name] : "" %></td>
+      <td width='40%' id ="error_comp"><%= @company_errors if @company_errors %></td>
     </tr>
     <tr>
       <th><%= f.label :company_address, "Company Address" %></th>
-      <td><%= text_field_tag'user[company_address]'%></td>
+      <td><%= text_field_tag'company[address]'%></td>
     </tr>
     </tbody>
     <tr>
         <th></th>
-        <td> <%= f.submit 'Sign Up', class: 'btn_small_blue' %> <%= f.submit 'Reset', type: :reset, class: 'btn_small_blue' %></td>
+        <td> <%= f.submit 'Sign Up', class: 'btn_small_blue',id:'Sign_Up' %> <%= f.submit 'Reset', type: :reset, class: 'btn_small_blue' %></td>
       </tr>
     </table>
 <% end %>

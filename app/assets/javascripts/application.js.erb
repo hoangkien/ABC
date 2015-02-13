@@ -16,9 +16,10 @@
 //= require_tree .
 
 $(document).ready(function() {
-    console.log(1)
-     var url = window.location.pathname.replace("/","");
-     $("#menu_nav ul li."+url+" a").addClass('active');
+     console.log(1)
+     var url = window.location.pathname.split("/");
+     // alert(url[1]);
+      $("#menu_nav ul li."+url[1]+" a").addClass('active');
     //
     //changeGroup();
     //if($("#center .new_form #user_group").val() =='company'){

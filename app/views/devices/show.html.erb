@@ -1,24 +1,21 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @device.name %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @device.status %>
-</p>
-
-<p>
-  <strong>Lat:</strong>
-  <%= @device.lat %>
-</p>
-
-<p>
-  <strong>Lng:</strong>
-  <%= @device.lng %>
-</p>
-
-<%= link_to 'Edit', edit_device_path(@device) %> |
+<h1>Device Infomation</h1>
+<table class="tblList">
+	<tr>
+		<th><strong>Name:</strong></th>
+		<td><%= @device.name %></td>
+	</tr>
+	<tr>
+		<th> <strong>Status:</strong></th>
+		<td><%= @device.status %></td>
+	</tr>
+	<tr>
+		<th><strong>Lat:</strong></th>
+		<td> <%= @device.lat %></td>
+	</tr>
+	<tr>
+		<th>  <strong>Lng:</strong></th>
+		<td><%= @device.lng %></td>
+	</tr>
+</table>
 <%= link_to 'Back', devices_path %>

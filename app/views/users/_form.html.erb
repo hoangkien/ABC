@@ -13,9 +13,18 @@
         <td width='40%'> <%= @user.errors[:name][0] %></td>
       </tr>
       <tr>
+        <th><%= f.label :gender, "Gender" %></th>
+        <td><%= f.select :gender,options_for_select([["Male","0"],["Fmale","1"]],@user.gender)%></td>
+      </tr>
+      <tr>
         <th> <%= f.label :address, :Address	%></th>
         <td> <%= f.text_field :address %></td>
         <td width='40%'> <%= @user.errors[:address][0] %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :email, "Email" %></th>
+        <td><%= f.email_field :email %></td>
+        <td width='40%'> <%= @user.errors[:email][0] %></td>
       </tr>
       <tr>
         <th> <%= f.label :group, 'Group' %></th>
@@ -33,6 +42,16 @@
                  end %>
         </td>
         <td width='40%'> <%= @user.errors[:group][0] %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :company_address, "Company Address" %></th>
+        <td>
+          <%= if @user.group == "company" && @user.company_id
+                  f.text_field :company_address, value: @user.company.address
+              else
+                  f.text_field :company_address, value:""
+              end %>
+        </td>
       </tr>
       </tbody>
       <tr>

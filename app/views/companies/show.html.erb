@@ -1,19 +1,24 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="top_in_center">
+        <div class="action_button">
+            <%= button_to 'Edit', edit_company_path(@company), class: 'btn_small_blue', method: :get %>
+            <%= button_to  'Back', companies_path, class: 'btn_small_blue', method: :get %>
+        </div>
+</div>
 
-<p>
-  <strong>Address:</strong>
-  <%= @company.address %>
-</p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @company.code %>
-</p>
-
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<table width="40%" class="show_data">
+  <tr>
+    <th><strong>Name:</strong></th>
+    <td> <%= @company.name %></td>
+  </tr>
+  <tr>
+    <th> <strong>Address:</strong></th>
+    <td>  <%= @company.address %></td>
+  </tr>
+  <tr>
+    <th>  <strong>Code:</strong></th>
+    <td>
+      <%= @company.code %>
+    </td>
+  </tr>
+</table>

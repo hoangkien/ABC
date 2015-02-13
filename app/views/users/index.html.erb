@@ -44,7 +44,7 @@
             <td><%= user.created_at.strftime("%d/%m/%Y") if not user.created_at == nil %></td>
             <td><%= user.updated_at.strftime("%d/%m/%Y") if not user.updated_at == nil %></td>
             <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,user %>
-            <%= link_to image_tag('templates/edit.png') ,edit_user_path(user) %>
+            <%= link_to image_tag('templates/edit.png') ,edit_user_path(user),method: :get %>
             <%= link_to image_tag('templates/Delete.png'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
       <% end %>

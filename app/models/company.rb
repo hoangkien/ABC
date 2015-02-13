@@ -3,6 +3,7 @@ class Company < ActiveRecord::Base
   require 'securerandom'
 
   validates :name, :address, presence: true
+  validates :name ,uniqueness: true
 
   def self.generate_company_code
     begin
@@ -12,6 +13,10 @@ class Company < ActiveRecord::Base
   end
   def self.get_all_company
     Company.select(:id,:name)
+  end
+  private
+  def self.search(query)
+    where("name like ? or address like ?","%#{query}%","%#{query}%")
   end
 
 end
