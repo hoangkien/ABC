@@ -7,6 +7,7 @@ class SessionController < ApplicationController
   end
 
   def create
+
     user = User.login(params[:account],Digest::MD5.hexdigest(params[:password]))
     if user
       # session[:user]=  {:id => user.id, :account => user.account,:group => user.group}

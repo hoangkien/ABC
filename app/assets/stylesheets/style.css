@@ -171,3 +171,8 @@ border-radius: 3px; font-weight:bold; line-height:20px; }
 textarea{
     width:100%;
 }
+#center span{
+	font-size: 15px;
+	text-decoration: underline;
+	color: blue;
+}

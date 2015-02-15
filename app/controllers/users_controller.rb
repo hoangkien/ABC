@@ -42,23 +42,23 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user_params = user_params
+     @params_company = company_params
     if user_params["group"] == 'company'
-      if company_params[:name].blank?
+      if company_params[:name].present? == true
         check_company = Company.where(name:company_params[:name]).first
-        if check_company
-          new_params_company = company_params
-          new_params_company[:code] = Company.generate_company_code
+        if check_company.nil? 
+          @params_company[:code] = Company.generate_company_code
           @user_params[:company_id] = Company.last.id
         else
-          @company_errors=" Da ton tai"
+          @company_errors="has already been taken"
         end
       else
         @company_errors = "Can't be blank"
       end
     end
-    @company = Company.new( new_params_company)
+    @company = Company.new( @params_company)
     @user = User.new(@user_params)
-    if @user.save
+    if @user.save && @company.save
          redirect_to users_url, notice: 'User was successfully created.' 
       else
          render :new 

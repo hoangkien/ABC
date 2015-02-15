@@ -1,31 +1,47 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Tours</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Number of member</th>
-      <th>Information</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tours.each do |tour| %>
-      <tr>
-        <td><%= tour.name %></td>
-        <td><%= tour.number_of_member %></td>
-        <td><%= tour.information %></td>
-        <td><%= link_to 'Show', tour %></td>
-        <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
-        <td><%= link_to 'Destroy', tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="top_in_center">
+  <div class="search_form">
+    <%= form_tag tours_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
+          <%= submit_tag "Search",class:'btn_small_blue', :name => nil %>
+        </p>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+  </div>
+          <div class="action_button">
+        <%= button_to 'New tour', new_tour_path, method: 'get', class:'btn_small_blue' %>
+                </div>
+</div>
+      <div class="cl"></div>
+     <% if notice %>
+      <p class="msgBlue"><%= notice %></p>
+      <% end    %>
 
-<%= link_to 'New Tour', new_tour_path %>
+    <table width="100%" class="tblList">
+      <tr>
+        <th width="10%">Name </th>
+        <th width="15%">Number of Member</th>
+        <th width="20%">Information</th>
+        <th width="10%">List User</th>
+        <th width="10%">Created at</th>
+        <th width="10%">Updated at</th>
+        <th width="10%">Action</th>
+      </tr>
+      <% @tours.each do |tour| %>
+          <tr>
+            <td><%= tour.name %></td>
+            <td><%= tour.number_of_member %></td>
+            <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
+            <td><%= link_to"List Users",list_user_path(tour)%></td>
+            <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
+            <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td>
+            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tour %>
+            <%= link_to image_tag('templates/edit.png') ,edit_tour_path(tour),method: :get %>
+            <%= link_to image_tag('templates/Delete.png'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+    </table>
+      <!--table end-->
+      <br><div class="paginate"> <%= paginate @tours %> </div>
+

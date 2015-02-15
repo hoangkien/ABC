@@ -14,7 +14,13 @@
     <%= render 'layouts/header'%>
   <!-- header end-->
 
-  <div class="breadscrumb"><span><%= controller.controller_name%></span><%= image_tag 'templates/brk_center.png'%><span><a href="#"><%= controller.action_name %></a></span></div>
+  <div class="breadscrumb">
+    <span><%= controller.controller_name%></span>
+    <%= image_tag 'templates/brk_center.png'%>
+    <span><a href="#"><%= controller.action_name %></a></span>
+    <%= image_tag 'templates/brk_center.png'%>
+
+    </div>
   <!--center start-->
   <div id="center">
     <!--left start-->

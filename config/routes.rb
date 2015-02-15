@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'session/new'
 
   post 'session/create'
+  get 'tours/list_users/:id' => "tours#list_users", as: :list_user
 
   delete 'session/destroy', as: :sign_out
 
@@ -12,7 +13,10 @@ Rails.application.routes.draw do
   concern :searching do
     get 'search', action: :search, on: :collection, as: :search
   end
+  post 'tours/add_tourguide/:tour_id' =>"tours#add_tourguide", as: :add_tourguide
 
+  get 'tours/:tour_id/traveller/:traveller_id' =>"tours#remove_traveller",as: :remove_traveller
+  get 'tours/:tour_id/tourguide/:tourguide_id' =>"tours#remove_tourguide", as: :remove_tourguide
   resources :companies
 
   resources :feedbacks, only: [:index,:show]
@@ -23,8 +27,10 @@ Rails.application.routes.draw do
 
   resources :devices
 
-  resources :tours
-
+  resources :tours do
+    resources :travellers, only: [:new,:create]   
+    resources :tourguides ,only: [:new]
+  end
   resources :users, :concerns => :paginatable do
     get 'edit_password', on: :member
     post 'update_password', on: :member
@@ -34,7 +40,7 @@ Rails.application.routes.draw do
   root to:'session#new', as: :sign_in
   
   get "api/devices" => "api/devices#show"
-  post "api/devices/add" =>"api/devices#add"
+  post "api/devices/create" =>"api/devices#create"
   get "api/users/list" => "api/users#list"
   post "api/users/update_position" => "api/users#update_position"
   post "api/users/feedback" => "api/users#feedback"

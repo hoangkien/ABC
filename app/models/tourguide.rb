@@ -6,4 +6,8 @@ class Tourguide < ActiveRecord::Base
     # where(:title, query) -> This would return an exact match of the query
     where("name like ?", "%#{query}%")
   end
+  def self.select
+  	#choose tourguide active = false
+  	where("active = 0")
+  end
 end

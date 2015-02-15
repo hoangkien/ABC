@@ -1,4 +1,4 @@
-<%= form_for(@traveller) do |f| %>
+<%= form_for :traveller, url: params[:tour_id] ? tour_travellers_path(params[:tour_id]) : travellers_path, method: :post do |f| %>
   <% if @traveller.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@traveller.errors.count, "error") %> prohibited this traveller from being saved:</h2>
@@ -25,7 +25,11 @@
   </div>
   <div class="field">
     <%= f.label :device_id %><br>
-    <%= f.number_field :device_id %>
+    <%= f.select :device_id  do %>
+      <%Device.search_active_o.each do |d|%>
+        <%= content_tag(:option,d.code,value:d.id)%>
+      <%end%>
+    <%end%>
   </div>
   <div class="actions">
     <%= f.submit %>

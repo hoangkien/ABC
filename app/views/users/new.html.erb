@@ -12,7 +12,6 @@
   });
 </script>
 <div> Create a new Account </div>
-<span><%= @company_errors if @company_errors %></span>
 <%= form_for(@user) do |f| %>
 
 <table width="70%" class="new_form">
@@ -51,7 +50,7 @@
     <tbody class="company">
     <tr>
       <th><%= f.label :company, "Company Name" %></th>
-      <td><%= text_field_tag'company[name]',  @company_params ? @company_name[:name] : "" %></td>
+      <td><%= text_field_tag'company[name]',  @params_company ? @params_company [:name] : "" %></td>
       <td width='40%' id ="error_comp"><%= @company_errors if @company_errors %></td>
     </tr>
     <tr>

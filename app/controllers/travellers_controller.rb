@@ -29,9 +29,19 @@ class TravellersController < ApplicationController
   # POST /travellers.json
   def create
     @traveller = Traveller.new(traveller_params)
-
     respond_to do |format|
-      if @traveller.save
+      #if params[:tour_id]
+      if @traveller.save && params[:tour_id]
+        tour = Tour.find(params[:tour_id])
+        traveller = Traveller.last
+        #add traveller in tour
+        traveller.tours << tour
+        device = Device.find(traveller_params[:device_id])
+        #change status device =>true
+        device.update(status:1)
+        #redirect_to tours > list_user
+        format.html{redirect_to list_user_path(params[:tour_id]), notice: 'Traveller was successfully created.'}
+      elsif @traveller.save
         format.html { redirect_to @traveller, notice: 'Traveller was successfully created.' }
         format.json { render :show, status: :created, location: @traveller }
       else
@@ -40,7 +50,6 @@ class TravellersController < ApplicationController
       end
     end
   end
-
   # PATCH/PUT /travellers/1
   # PATCH/PUT /travellers/1.json
   def update

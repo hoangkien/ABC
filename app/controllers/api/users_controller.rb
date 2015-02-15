@@ -1,16 +1,16 @@
-module Api
-	class UsersController < ApplicationController
+
+	class Api::UsersController < ApplicationController
 		skip_before_action :authorize
 		def list
 			#check the code device already in the list
 			#check joined the tour
 			#get tour info
 			#get list users
-			if params[:device_code]
+			 unless params[:device_code] == "" or params[:device_code].nil?
 				@check_exits = Device.where(code: params[:device_code]).first
 				if @check_exits
 					if @check_exits.status == false
-						render json:{status:0, message:"device not used",traveller_in_tour:[]}
+						render json:{status:0, message:"Device not used",traveller_in_tour:[]}
 					else
 						#get tourguide info using device
 						@tourguide = Tourguide.where(device_id: @check_exits.id ).first
@@ -30,7 +30,7 @@ module Api
 												                lat: @device.lat,
 												                lng: @device.lng,
 												                address: travel.address,
-												                gender: travel.gender, 
+												                gender: travel.gender == false ? "male" : "female", 
 												                email: travel.email
 											            }
 								end
@@ -50,19 +50,19 @@ module Api
 												                lat: @device.lat,
 												                lng: @device.lng,
 												                address: tourguide.address,
-												                gender: tourguide.gender, 
+												                gender: tourguide.gender == false ? "male" : "female", 
 												                email: tourguide.email
 											            }
 								end
-								render json:{status:0,message:"success",tour:@tour,tourguide_in_tour:@tourguide_in_tour}
+								render json:{status:0,message:"Success",tour:@tour,tourguide_in_tour:@tourguide_in_tour}
 						end
 					end
 
 				else
-					render json:{status: 006, message:"device code is invalid"}
+					render json:{status: 9, message:"Device code  invalid"}
 				end
 			else
-				render json:{status:101,message:"Missing device code"}
+				render json:{status:1,message:"Missing device code"}
 			end
 		end
 		def update_position
@@ -72,26 +72,40 @@ module Api
 					# render json:{device:@device}
 					# render json:{post:post_params}
 					# @post_params = post_params
-					@device.update_attributes(post_params)
-					render json:{status:0,message:"success"}
+					if post_params[:lat] ==""
+						render json:{status:3, message:"Missing Lat"}
+					elsif post_params[:lng] ==""
+						render json:{status:4,message:"Missing lng"}
+					else
+						if @device.update_attributes(post_params)
+							render json:{status:0,message:"success"}
+						else
+							render json:{status:5,message:"Can't update position"}
+						end
+						
+					end
 				else
-					render json:{status: 006, message:"Device code is invalid"}
+					render json:{status: 0, message:"Device code  invalid"}
 				end
 			else
-				render json:{status:101,message:"Missing device code"}
+				render json:{status:1,message:"Missing device code"}
 			end
 
 		end
 		def feedback
-			@device = Device.where(code:params[:device_code]).first
-			@traveller = Traveller.where(device_id:@device.id).first
-			@params_feedback = params_feedback
-			@params_feedback[:traveller_id] = @traveller.id
-			@feedback = Feedback.new(@params_feedback)
-			if @feedback.save
-				render json:{status:0, message:"success"}
+			if params[:device_code]
+				@device = Device.where(code:params[:device_code]).first
+				@traveller = Traveller.where(device_id:@device.id).first
+				@params_feedback = params_feedback
+				@params_feedback[:traveller_id] = @traveller.id
+				@feedback = Feedback.new(@params_feedback)
+				if @feedback.save
+					render json:{status:0, message:"success"}
+				else
+					render json:{status:2,message:"Can't send feedback"}
+				end
 			else
-				render json:{status:2,message:"error"}
+				render json:{status:1,message:"Missing device code"}
 			end
 			
 		end
@@ -106,4 +120,3 @@ module Api
 			params.permit(:lat,:lng)
 		end
 	end
-end

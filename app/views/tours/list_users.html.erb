@@ -1,0 +1,60 @@
+<div class="traveller">
+	<div style="overflow:hidden">
+		<span>List travellers</span>
+		<div class="action_button" style="margin-bottom:35px">
+	    <%= button_to 'Add new traveller', new_tour_traveller_path(params[:id]), method: 'get', class:'btn_medium_blue' %>
+		</div>
+	</div>
+	<% if notice %>
+		<p class="msgBlue"><%= notice %></p>
+	<% end    %>
+	<table class="tblList" width="100%">
+		<tr>
+			 <th width="3%">STT</th>
+			<th width="40%">Name</th>
+			<th width="20%">Phone</th>
+			<th>Device</th>
+			<th width="15%">Action</th>	
+		</tr>
+		<% @traveller_list.each do |traveller|%>
+		<tr>
+			<td>1</td>
+			<td><%= traveller.name %></td>
+			<td><%= traveller.device_id %></td>
+			<td><%= traveller.phone%></td>
+			<td><%= link_to"Delete",remove_traveller_path(params[:id],traveller.id)%></td>
+		</tr>
+		<% end %>
+		</table> 
+</div>
+<div class="tourguide" style="margin-top:10px">
+	<span>List tourguides</span>
+	<div style="text-align:right">
+		<%= form_tag(add_tourguide_path(params[:id])) do -%>
+			<%= select_tag"tourguide",options_from_collection_for_select(@tourguides,"id","name"), include_blank:"Choose Tour Guide"%>
+			<%= select_tag"device",options_from_collection_for_select(@devices,"id","code"),include_blank:"Choose Device"%>
+			<%= button_tag"Add TourGuide" %>
+		<%end%>
+	</div>
+	<% if alert %>
+		<p class="msgBlue"><%= alert %></p>
+	<% end    %>
+	<table class="tblList" width="100%">
+		<tr>
+			<th width="3%">STT</th>
+			<th width="40%">Name</th>
+			<th width="20%">Phone</th>
+			<th>Device</th>
+			<th width="15%">Action</th>
+		</tr>
+		<%@tourguide_list.each do |tourguide|%>
+			<tr>
+				<td>1</td>	
+				<td><%= tourguide.name %></td>
+				<td><%= tourguide.phone %></td>
+				<td><%= tourguide.device_id%></td>
+				<td><%= link_to"Delete", remove_tourguide_path(params[:id],tourguide.id)%></td>
+			</tr>
+		<% end %>
+	</table>
+</div>

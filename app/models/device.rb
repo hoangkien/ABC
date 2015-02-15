@@ -5,4 +5,7 @@ class Device < ActiveRecord::Base
   def self.search(query)
   	where("name like ?","%#{query}%")	
   end
+  def self.search_active_o
+  	where("status = 0")
+  end
 end
