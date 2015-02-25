@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get 'session/new'
+  get 'tours/disconnect_device' => "tours#disconnect_device"
+  get 'tours/change_device' => "tours#change_device"
 
   post 'session/create'
   get 'tours/list_users/:id' => "tours#list_users", as: :list_user

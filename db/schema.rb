@@ -11,23 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212033349) do
+ActiveRecord::Schema.define(version: 20150223100534) do
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string   "data_file_name",    limit: 255, null: false
+    t.string   "data_content_type", limit: 255
+    t.integer  "data_file_size",    limit: 4
+    t.integer  "assetable_id",      limit: 4
+    t.string   "assetable_type",    limit: 30
+    t.string   "type",              limit: 30
+    t.integer  "width",             limit: 4
+    t.integer  "height",            limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "companies", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.text     "address",    limit: 65535
-    t.string   "code",       limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "name",        limit: 255
+    t.text     "address",     limit: 65535
+    t.string   "code",        limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "information", limit: 65535
   end
 
   create_table "devices", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.boolean  "status",     limit: 1
+    t.boolean  "status",     limit: 1,   default: false
     t.string   "lat",        limit: 255
     t.string   "lng",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "code",       limit: 255
     t.integer  "company_id", limit: 4
   end
@@ -48,8 +65,9 @@ ActiveRecord::Schema.define(version: 20150212033349) do
     t.boolean  "active",     limit: 1
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.binary   "gender",     limit: 1
+    t.integer  "gender",     limit: 1
     t.string   "email",      limit: 255
+    t.integer  "company_id", limit: 4
   end
 
   create_table "tourguides_tours", id: false, force: :cascade do |t|
@@ -65,6 +83,7 @@ ActiveRecord::Schema.define(version: 20150212033349) do
     t.string   "information",      limit: 255
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "company_id",       limit: 4
   end
 
   create_table "tours_travellers", id: false, force: :cascade do |t|
@@ -83,6 +102,7 @@ ActiveRecord::Schema.define(version: 20150212033349) do
     t.datetime "updated_at",               null: false
     t.boolean  "gender",     limit: 1
     t.string   "email",      limit: 255
+    t.integer  "company_id", limit: 4
   end
 
   create_table "users", force: :cascade do |t|

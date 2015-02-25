@@ -4,11 +4,24 @@ class TravellersController < ApplicationController
   # GET /travellers
   # GET /travellers.json
   def index
-    if params[:search]
-      @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
+    if session[:group] == "admin"
+      if params[:search]
+        @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
+      else
+        @travellers = Traveller.order(:name).page(params[:page])
+      end
     else
-      @travellers = Traveller.order(:name).page(params[:page])
+      if params[:search]
+        @travellers = Traveller.search(params[:search],session[:company_id]).order("created_at DESC").page(params[:page])
+      else
+        @travellers = Traveller.where(company_id:session[:company_id]).order(:name).page(params[:page])
+      end 
     end
+    # if params[:search]
+    #   @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
+    # else
+    #   @travellers = Traveller.order(:name).page(params[:page])
+    # end
   end
 
   # GET /travellers/1
@@ -18,17 +31,34 @@ class TravellersController < ApplicationController
 
   # GET /travellers/new
   def new
+    if session[:group] == "company"
+      @devices = Device.where(status:0,company_id:session[:company_id])
+    else
+      @devices = Device.where(status:0)
+    end
     @traveller = Traveller.new
+    if session[:group] == "company"
+      @company_id = session[:company_id]
+    end
   end
 
   # GET /travellers/1/edit
   def edit
+    if session[:group] == "company"
+      @devices = Device.where(status:0,company_id:session[:company_id])
+    else
+      @devices = Device.where(status:0)
+    end
   end
 
   # POST /travellers
   # POST /travellers.json
   def create
-    @traveller = Traveller.new(traveller_params)
+    @traveller_params = traveller_params
+    if session[:company_id]
+      @traveller_params[:company_id] = session[:company_id]
+    end
+    @traveller = Traveller.new(@traveller_params)
     respond_to do |format|
       #if params[:tour_id]
       if @traveller.save && params[:tour_id]

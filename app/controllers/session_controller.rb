@@ -13,6 +13,7 @@ class SessionController < ApplicationController
       # session[:user]=  {:id => user.id, :account => user.account,:group => user.group}
       session[:account]= user.account
       session[:group] =  user.group
+      session[:id] = user.id
       if user.group == 'company'
         session[:company_id] = user.company_id
       end

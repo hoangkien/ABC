@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password, :update_password]
-   before_action :check_permission ,only: [:index,:destroy,]
+  before_action :check_permission ,only: [:index,:destroy]
 
   # GET /users
   # GET /users.json
@@ -32,6 +32,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if params[:id] != session[:id].to_s
+         redirect_to edit_user_path(session[:id])
+    end
     @user.company
     @company = Company.all
   end
@@ -55,6 +58,9 @@ class UsersController < ApplicationController
       else
         @company_errors = "Can't be blank"
       end
+      if company_params[:address].present? == false
+        @company_errors_address = "Can't be blank"
+      end
     end
     @company = Company.new( @params_company)
     @user = User.new(@user_params)
@@ -69,8 +75,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params_for_updating)
-
+      if session[:group]=="company" 
+        @user = User.find(params[:id])
+        @company = Company.find(@user.company_id)
+         if @company.update(company_params) && @user.update(user_params_for_updating)
+            format.html{ redirect_to user_path(params[:id], method: :get), notice:"Update successfully" }
+         end
+      elsif @user.update(user_params_for_updating)
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -111,15 +122,19 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group)
+      if session[:group] == "company"
+        params.require(:user).permit(:account, :password,:password_confirmation, :name, :address)
+      else
+        params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group)
+      end
     end
     def company_params
-      params.require(:company).permit(:name,:address)
+      params.require(:company).permit(:name,:address,:information)
     end
     def user_params_for_updating
       params.require(:user).permit(:name, :address, :group,:gender,:email)
     end
-  def user_params_for_changing_password
-    params.require(:user).permit( :password, :password_confirmation)
-  end
+    def user_params_for_changing_password
+      params.require(:user).permit( :password, :password_confirmation)
+    end
 end

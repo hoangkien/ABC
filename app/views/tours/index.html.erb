@@ -28,18 +28,22 @@
         <th width="10%">Updated at</th>
         <th width="10%">Action</th>
       </tr>
-      <% @tours.each do |tour| %>
-          <tr>
-            <td><%= tour.name %></td>
-            <td><%= tour.number_of_member %></td>
-            <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
-            <td><%= link_to"List Users",list_user_path(tour)%></td>
-            <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
-            <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td>
-            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tour %>
-            <%= link_to image_tag('templates/edit.png') ,edit_tour_path(tour),method: :get %>
-            <%= link_to image_tag('templates/Delete.png'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
+      <% if @tours.count == 0 %>
+        <tr><td colspan="7" style="text-align:center">No Data</td></tr>
+      <%else%>
+        <% @tours.each do |tour| %>
+            <tr>
+              <td><%= tour.name %></td>
+              <td><%= tour.number_of_member %></td>
+              <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
+              <td><%= link_to"List Users",list_user_path(tour), method: :get%></td>
+              <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
+              <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tour %>
+              <%= link_to image_tag('templates/edit.png') ,edit_tour_path(tour),method: :get %>
+              <%= link_to image_tag('templates/Delete.png'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
       <% end %>
     </table>
       <!--table end-->

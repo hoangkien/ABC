@@ -1,5 +1,7 @@
 class Company < ActiveRecord::Base
   has_one :user
+  has_many :tourguides
+  has_many :travellers
   require 'securerandom'
 
   validates :name, :address, presence: true

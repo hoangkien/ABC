@@ -10,10 +10,25 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<table style="width:70%; margin-left:10%">
+  <tr height="30px">
+    <td width="20%"><%= f.label :name %></td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :number_of_member %></td>
+    <td><%= f.text_field :number_of_member %></td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top"><%= f.label :information %></td>
+    <td><%= f.text_area :information, cols: 40, rows: 10   %></td>
+  </tr>
+  <tr>
+    <td> <%= f.submit :'Create Tour', class:'btn_small_blue' %></td>
+  </tr>
+</table>
+<!--   <div class="field">
+  <%= f.text_field :name %>
   </div>
   <div class="field">
     <%= f.label :number_of_member %><br>
@@ -25,5 +40,5 @@
   </div>
   <div class="actions">
     <%= f.submit %>
-  </div>
+  </div> -->
 <% end %>

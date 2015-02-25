@@ -5,6 +5,9 @@
             <%= button_to  'Back', users_path, class: 'btn_small_blue', method: :get %>
         </div>
 </div>
+<% if notice%>
+  <p class="msgBlue"><%= notice %></p>
+<% end%>
 <table width="40%" class="tblList">
   <tr>
     <th width="10%">    <strong>Account:</strong></th>
@@ -16,7 +19,7 @@
   </tr>
   <tr>
     <th> <strong>Address:</strong></th>
-    <td>  <%= @user.name %></td>
+    <td>  <%= @user.address%></td>
   </tr>
   <tr>
     <th>  <strong>Group:</strong></th>

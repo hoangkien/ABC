@@ -4,7 +4,7 @@
     <table width="60%" class="new_form">
       <tr>
         <th width="20%">   <%= f.label :account, 'Account' %></th>
-        <td width="30%"> <%= f.text_field :account, disabled: true %></td>
+        <td width="30%"> <%= f.text_field :account, readonly: true %></td>
         <td width='40%'> <%= @user.errors[:account][0] %></td>
       </tr>
       <tr>
@@ -28,17 +28,23 @@
       </tr>
       <tr>
         <th> <%= f.label :group, 'Group' %></th>
-        <td>
-          <%= f.select :group, options_for_select([["admin", "admin"], ["company", "company"]],  @user.group)%>
-        </td>
+        <% if session[:group] == "admin"%>
+          <td>
+            <%= f.select :group, options_for_select([["admin", "admin"], ["company", "company"]],  @user.group)%>
+          </td>
+        <%else%>
+          <td>
+            <%= f.text_field :group, value:@user.group,disabled:true%>
+          </td>
+        <%end%>
       </tr>
       <tbody class="company">
       <tr>
         <th><%= f.label :company, "Company Name" %></th>
         <td> <%= if @user.group == "company" && @user.company_id
-                  f.text_field :company, value: @user.company.name
+                  text_field_tag'company[name]',@user.company.name
                  else
-                  f.text_field :company, value:""
+                  text_field_tag'company[name]',""
                  end %>
         </td>
         <td width='40%'> <%= @user.errors[:group][0] %></td>
@@ -47,9 +53,9 @@
         <th><%= f.label :company_address, "Company Address" %></th>
         <td>
           <%= if @user.group == "company" && @user.company_id
-                  f.text_field :company_address, value: @user.company.address
+                  text_field_tag'company[address]', @user.company.address
               else
-                  f.text_field :company_address, value:""
+                  text_field_tag'company[address]',""
               end %>
         </td>
       </tr>

@@ -24,7 +24,7 @@
 								@traveller_in_tour = []
 								@traveller_list.each do |travel|
 									@device = Device.find(travel.device_id)
-									@traveller_in_tour << {id:travel.id ,
+									@traveller_in_tour << {     id:travel.id ,
 												                name: travel.name,
 												                phone: travel.phone,
 												                lat: @device.lat,
@@ -44,7 +44,7 @@
 								@tourguide_in_tour = []
 								@tourguide_list.each do |tourguide|
 									@device = Device.find(tourguide.device_id)
-									@tourguide_in_tour << {id:tourguide.id ,
+									@tourguide_in_tour << {     id:tourguide.id ,
 												                name: tourguide.name,
 												                phone: tourguide.phone,
 												                lat: @device.lat,

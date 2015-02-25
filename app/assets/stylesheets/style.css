@@ -173,6 +173,9 @@ textarea{
 }
 #center span{
 	font-size: 15px;
-	text-decoration: underline;
 	color: blue;
+}
+#center .tour_list_user select{
+	width: 150px;
+	height: 25px;
 }

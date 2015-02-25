@@ -10,28 +10,26 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :device_id %><br>
-    <%= f.select :device_id  do %>
-      <%Device.search_active_o.each do |d|%>
-        <%= content_tag(:option,d.code,value:d.id)%>
-      <%end%>
-    <%end%>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<table  style="width:70%; margin-left:10%">
+  <tr height="30px">
+    <td  width="20%"><%= f.label :name %></td>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :address %></td>
+    <td><%= f.text_field :address %></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :phone %></td>
+    <td> <%= f.text_field :phone %></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :device_id %><br></td>
+    <td><%= select_tag"traveller[device_id]", options_from_collection_for_select(@devices, "id", "code"),include_blank:"Choose Device"%></td>
+  </tr>
+  <tr height="30px">
+    <td></td>
+    <td>  <%= f.submit"Add traveller",class:'btn_medium_blue' %></td>
+  </tr>
+</table>
 <% end %>

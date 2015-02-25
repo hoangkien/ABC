@@ -28,19 +28,25 @@
         <th width="15%">Email</th>
         <th width="10%">Action</th>
       </tr>
-      <% @tourguides.each do |tourguide| %>
-          <tr>
-            <td><%= tourguide.name %></td>
-            <td><%= tourguide.address %></td>
-            <td><%= tourguide.phone%></td>
-            <td><%= tourguide.device_id %></td>
-            <td><%= tourguide.gender%></td>
-            <td><%= tourguide.email%></td>
-            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tourguide %>
-            <%= link_to image_tag('templates/edit.png') ,edit_tourguide_path(tourguide) %>
-            <%= link_to image_tag('templates/Delete.png'), tourguide, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-      <% end %>
+      <% if @tourguides.count == 0%>
+        <tr>
+          <td colspan="7" style="text-align:center"> No Data</td>
+        </tr>
+      <% else %> 
+        <% @tourguides.each do |tourguide| %>
+            <tr>
+              <td><%= tourguide.name %></td>
+              <td><%= tourguide.address %></td>
+              <td><%= tourguide.phone%></td>
+              <td><%= tourguide.device_id %></td>
+              <td><%= tourguide.gender%></td>
+              <td><%= tourguide.email%></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tourguide %>
+              <%= link_to image_tag('templates/edit.png') ,edit_tourguide_path(tourguide) %>
+              <%= link_to image_tag('templates/Delete.png'), tourguide, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+      <%end%>
     </table>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @tourguides %> </div>

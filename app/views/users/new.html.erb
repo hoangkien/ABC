@@ -18,29 +18,29 @@
       <tr>
         <th width="30%">   <%= f.label :account, 'Account' %></th>
         <td width="35%"> <%= f.text_field :account %></td>
-	<td width='40%'> <%= @user.errors[:account][0] %></td>
+	     <td width='40%'> <%= @user.errors[:account][0] %></td>
       </tr>
       <tr>
         <th><%= f.label :password %></th>
         <td><%= f.password_field :password %></td>
-	<td width='40%'> <%= @user.errors[:password][0] %></td>
+	     <td width='40%'> <%= @user.errors[:password][0] %></td>
       </tr>
       <tr>
         <th><%= f.label :password_confirmation,  'Confirmation' %></th>
         <td><%= f.password_field :password_confirmation %></td>
-	<td width='40%'> <%= @user.errors[:password_confirmation][0] %></td>
+	      <td width='40%'> <%= @user.errors[:password_confirmation][0] %></td>
       </tr>
-<tr>
+      <tr>
         <th><%= f.label :name , 'User name' %></th>
         <td><%= f.text_field :name %></td>
-	<td width='40%'> <%= @user.errors[:name][0] %></td>
+	      <td width='40%'> <%= @user.errors[:name][0] %></td>
       </tr>
-<tr>
+      <tr>
         <th> <%= f.label :address, :Address	%></th>
         <td> <%= f.text_field :address %></td>
-	<td width='40%'> <%= @user.errors[:address][0] %></td>
+	      <td width='40%'> <%= @user.errors[:address][0] %></td>
       </tr>
-<tr>
+      <tr>
         <th> <%= f.label :group, 'Group' %></th>
         <td>
           <%= f.select(:group,options_for_select([["Admin", "admin"], ["Company", "company"]], @user_params ? @user_params[:group] : "admin")) %>
@@ -56,6 +56,11 @@
     <tr>
       <th><%= f.label :company_address, "Company Address" %></th>
       <td><%= text_field_tag'company[address]'%></td>
+       <td width='40%' id ="error_comp"><%= @company_errors_address if @company_errors_address %></td>
+    </tr>
+    <tr>
+      <th style="vertical-align:top"><%= f.label :company_info, "Company Info" %></th>
+      <td><%= text_area_tag 'company[information]',nil, rows:5%></td>
     </tr>
     </tbody>
     <tr>

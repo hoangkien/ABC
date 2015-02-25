@@ -28,19 +28,23 @@
         <th width="15%">Email</th>
         <th width="10%">Action</th>
       </tr>
-      <% @travellers.each do |traveller| %>
-          <tr>
-            <td><%= traveller.name %></td>
-            <td><%= traveller.address %></td>
-            <td><%= traveller.phone%></td>
-            <td><%= traveller.device_id %></td>
-            <td><%= traveller.gender == 0 ? "Male" : "Female"%></td>
-            <td><%= traveller.email%></td>
-            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,traveller %>
-            <%= link_to image_tag('templates/edit.png') ,edit_traveller_path(traveller) %>
-            <%= link_to image_tag('templates/Delete.png'), traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-      <% end %>
+      <% if @travellers.count == 0 %>
+        <tr><td colspan="7" style="text-align:center">No Data</td></tr>
+      <% else %>
+        <% @travellers.each do |traveller| %>
+            <tr>
+              <td><%= traveller.name %></td>
+              <td><%= traveller.address %></td>
+              <td><%= traveller.phone%></td>
+              <td><%= traveller.device_id %></td>
+              <td><%= traveller.gender == 0 ? "Male" : "Female"%></td>
+              <td><%= traveller.email%></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,traveller %>
+              <%= link_to image_tag('templates/edit.png') ,edit_traveller_path(traveller) %>
+              <%= link_to image_tag('templates/Delete.png'), traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+      <%end%>
     </table>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @travellers %> </div>

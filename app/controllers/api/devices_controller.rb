@@ -86,7 +86,7 @@
 																}
 				end
 			else
-				render json:{status: 1, message:"miss device code"}
+				render json:{status: 1, message:"Missing device code"}
 			end
 		end
 		#function add device
@@ -100,7 +100,7 @@
 						if @check_code
 							render json:{status: 8, message:"device code already exist"}
 						else
-							@device = Device.new(code:params[:device_code],company_id:@check_company.id,status:0)
+							@device = Device.new(name:params[:device_code],code:params[:device_code],company_id:@check_company.id,status:0)
 							@device.save
 							render json: {status: 0, message:"Success"}
 						end

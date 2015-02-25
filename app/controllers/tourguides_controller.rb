@@ -4,11 +4,24 @@ class TourguidesController < ApplicationController
   # GET /tourguides
   # GET /tourguides.json
   def index
-    if params[:search]
-      @tourguides = Tourguide.search(params[:search]).order("created_at DESC").page(params[:page])
+    if session[:group] == "admin"
+      if params[:search]
+        @tourguides = Tourguide.search(params[:search]).order("created_at DESC").page(params[:page])
+      else
+        @tourguides = Tourguide.order(:name).page(params[:page])
+      end
     else
-      @tourguides = Tourguide.order(:name).page(params[:page])
+      if params[:search]
+        @tourguides = Tourguide.search(params[:search],session[:company_id]).order("created_at DESC").page(params[:page])
+      else
+        @tourguides = Tourguide.where(company_id:session[:company_id]).order(:name).page(params[:page])
+      end
     end
+    # if params[:search]
+    #   @tourguides = Tourguide.search(params[:search]).order("created_at DESC").page(params[:page])
+    # else
+    #   @tourguides = Tourguide.order(:name).page(params[:page])
+    # end
   end
 
   # GET /tourguides/1
@@ -28,7 +41,11 @@ class TourguidesController < ApplicationController
   # POST /tourguides
   # POST /tourguides.json
   def create
-    @tourguide = Tourguide.new(tourguide_params)
+    @tourguide_params = tourguide_params
+    if session[:company_id]
+      @tourguide_params[:company_id] = session[:company_id]
+    end
+    @tourguide = Tourguide.new(@tourguide_params)
 
     respond_to do |format|
       if @tourguide.save
