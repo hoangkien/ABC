@@ -1,29 +1,30 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @tourguide.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @tourguide.address %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @tourguide.phone %>
-</p>
-
-<p>
-  <strong>Device:</strong>
-  <%= @tourguide.device_id %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @tourguide.active %>
-</p>
+<table class="tblList" style="width:40%">
+  <tr>
+    <th> <strong>Name:</strong></th>
+    <td><%= @tourguide.name %></td>
+  </tr>
+  <tr>
+    <th><strong>Address:</strong></th>
+    <td><%= @tourguide.address %></td>
+  </tr>
+  <tr>
+    <th><strong>Phone:</strong></th>
+    <td><%= @tourguide.phone %></td>
+  </tr>
+  <tr>
+    <th><strong>Device:</strong></th>
+    <td><%= @tourguide.device_id %></td>
+  </tr>
+  <tr>
+    <th><strong>Active:</strong></th>
+    <td><%= @tourguide.active %></td>
+  </tr>
+  <tr>
+    <th><strong>Company:</strong></th>
+    <td><%= @tourguide.company.name%></td>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_tourguide_path(@tourguide) %> |
 <%= link_to 'Back', tourguides_path %>

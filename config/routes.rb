@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get 'search', action: :search, on: :collection, as: :search
   end
   post 'tours/add_tourguide/:tour_id' =>"tours#add_tourguide", as: :add_tourguide
+  post 'tours/add_traveller/:tour_id' =>"tours#add_traveller", as: :add_traveller
 
   get 'tours/:tour_id/traveller/:traveller_id' =>"tours#remove_traveller",as: :remove_traveller
   get 'tours/:tour_id/tourguide/:tourguide_id' =>"tours#remove_tourguide", as: :remove_tourguide

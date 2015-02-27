@@ -1,6 +1,7 @@
 class Device < ActiveRecord::Base
   belongs_to :tourguide
   belongs_to :traveller
+  belongs_to :company
   has_one :feedback
   def self.search(query,company_id = nil)
   	if company_id

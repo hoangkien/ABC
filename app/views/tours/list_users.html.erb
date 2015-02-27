@@ -4,23 +4,23 @@
 			var tourguide = $("#tourguide").val();
 			var device = $("#device").val();
 			if(tourguide == ""){
-				alert("Don't select Tourguide");
+				alert("Not select Tourguide");
 				return false;
 			}
 			if( device ==""){
-				alert("Don't select device");
+				alert("Not select device");
 				return false;
 			}
 			
 
 		});
-		 $('.change_device').each(function(){
-		 	//alert("a");
-		// 	$(this).click(function(){
-		// 		alert($(this).val());
-		// 	})
-		 })
-
+		$(".traveller #add_traveller").click(function(){
+			var traveller = $("#traveller").val();
+			if (traveller == ""){
+				alert("Not select traveller");
+				return false;
+			}
+		});
 	});
 	function disconnect(group,id, device_id, tour_id){
 		$.ajax({
@@ -75,7 +75,11 @@
 	<div style="overflow:hidden">
 		<span>List travellers</span>
 		<div class="action_button" style="margin-bottom:35px">
-	    <%= button_to 'Add new traveller', new_tour_traveller_path(params[:id]), method: 'get', class:'btn_medium_blue' %>
+			<%= button_to 'Add new traveller', new_tour_traveller_path(params[:id]), method: 'get', class:'btn_medium_blue' %>
+			<%= form_tag(add_traveller_path(params[:id])) do -%>
+				<%= select_tag"traveller",options_from_collection_for_select(@travellers,"id","name"),include_blank:"Choose Traveller"%>
+				<%= button_tag"Add Traveller", id:'add_traveller', class:'btn_medium_blue' %>
+			<% end -%>
 		</div>
 	</div>
 	<% if notice %>

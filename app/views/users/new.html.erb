@@ -55,7 +55,7 @@
     </tr>
     <tr>
       <th><%= f.label :company_address, "Company Address" %></th>
-      <td><%= text_field_tag'company[address]'%></td>
+      <td><%= text_field_tag'company[address]',@params_company ? @params_company [:address] : ""%></td>
        <td width='40%' id ="error_comp"><%= @company_errors_address if @company_errors_address %></td>
     </tr>
     <tr>

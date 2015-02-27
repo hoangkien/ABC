@@ -41,11 +41,12 @@
       <tbody class="company">
       <tr>
         <th><%= f.label :company, "Company Name" %></th>
-        <td> <%= if @user.group == "company" && @user.company_id
-                  text_field_tag'company[name]',@user.company.name
-                 else
-                  text_field_tag'company[name]',""
-                 end %>
+        <td>
+          <%= if @user.group == "company" && @user.company_id
+                  text_field_tag'company[name]', @user.company.name
+              else
+                  text_field_tag'company[name]'
+              end %>
         </td>
         <td width='40%'> <%= @user.errors[:group][0] %></td>
       </tr>
@@ -55,7 +56,7 @@
           <%= if @user.group == "company" && @user.company_id
                   text_field_tag'company[address]', @user.company.address
               else
-                  text_field_tag'company[address]',""
+                  text_field_tag'company[address]'
               end %>
         </td>
       </tr>

@@ -1,6 +1,6 @@
 class TourguidesController < ApplicationController
   before_action :set_tourguide, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_company, only: [:show,:edit]
   # GET /tourguides
   # GET /tourguides.json
   def index
@@ -87,9 +87,16 @@ class TourguidesController < ApplicationController
     def set_tourguide
       @tourguide = Tourguide.find(params[:id])
     end
-
+    def check_company
+      if session[:group] == "company"
+        company_id = Tourguide.find(params[:id]).company_id
+        if company_id != session[:company_id]
+          redirect_to tourguides_path
+        end
+      end
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def tourguide_params
-      params.require(:tourguide).permit(:name, :address, :phone, :device_id, :active)
+      params.require(:tourguide).permit(:name, :address, :phone, :device_id, :active,:email,:gender)
     end
 end

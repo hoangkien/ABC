@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :edit, :update, :destroy]
+  before_action :check_company , only: [:show,:edit]
 
   # GET /devices
   # GET /devices.json
@@ -79,7 +80,14 @@ class DevicesController < ApplicationController
     def set_device
       @device = Device.find(params[:id])
     end
-
+    def check_company
+      if session[:group] == "company"
+        company_id_device = Device.find(params[:id]).company_id
+        if company_id_device != session[:company_id]
+          redirect_to devices_path
+        end
+      end
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
       params.require(:device).permit(:name, :status, :lat, :lng)

@@ -1,37 +1,31 @@
 <%= form_for(@tourguide) do |f| %>
-  <% if @tourguide.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tourguide.errors.count, "error") %> prohibited this tourguide from being saved:</h2>
-
-      <ul>
-      <% @tourguide.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :device_id %><br>
-    <%= f.number_field :device_id %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<table style="width:70%; margin-left:10%">
+  <tr height="30px">
+    <td width="20%"><%= f.label :name %></td>
+    <td width="35%"><%= f.text_field :name %></td>
+    <td><%=  @tourguide.errors[:name][0] %></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :address %></td>
+    <td><%= f.text_field :address %></td>
+  </tr> 
+  <tr height="30px">
+    <td><%= f.label :gender %></td>
+    <td><%= f.select :gender,options_for_select([["Male","0"],["Fmale","1"]],@tourguide.gender)%></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :phone %></td>
+    <td><%= f.text_field :phone %></td>
+    <td><%= @tourguide.errors[:phone][0]%></td>
+  </tr>
+  <tr height="30px">
+    <td><%= f.label :Email, "Email" %></td>
+    <td><%= f.text_field :email %></td>
+    <td><%= @tourguide.errors[:email][0]%></td>
+  </tr>
+  <tr height="30px">
+    <td></td>
+    <td> <%= f.submit"Create Tourguide",class:'btn_medium_blue' %></td>
+  </tr>
+</table>
 <% end %>

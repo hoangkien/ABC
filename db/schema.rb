@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223100534) do
+ActiveRecord::Schema.define(version: 20150226064627) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -57,14 +57,19 @@ ActiveRecord::Schema.define(version: 20150223100534) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "gcm_registrations", force: :cascade do |t|
+    t.string  "regID",  limit: 255
+    t.integer "active", limit: 4
+  end
+
   create_table "tourguides", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
-    t.integer  "device_id",  limit: 4
-    t.boolean  "active",     limit: 1
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "device_id",  limit: 4,     default: 0
+    t.boolean  "active",     limit: 1,     default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "gender",     limit: 1
     t.string   "email",      limit: 255
     t.integer  "company_id", limit: 4
@@ -97,12 +102,13 @@ ActiveRecord::Schema.define(version: 20150223100534) do
     t.string   "name",       limit: 255
     t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
-    t.integer  "device_id",  limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "device_id",  limit: 4,     default: 0
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.boolean  "gender",     limit: 1
     t.string   "email",      limit: 255
     t.integer  "company_id", limit: 4
+    t.integer  "active",     limit: 4
   end
 
   create_table "users", force: :cascade do |t|

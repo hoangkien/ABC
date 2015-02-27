@@ -39,9 +39,9 @@
               <td><%= link_to"List Users",list_user_path(tour), method: :get%></td>
               <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
               <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td>
-              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tour %>
-              <%= link_to image_tag('templates/edit.png') ,edit_tour_path(tour),method: :get %>
-              <%= link_to image_tag('templates/Delete.png'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,tour,method: :get %>
+              <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_tour_path(tour),method: :get %>
+              <%= link_to image_tag('templates/Delete.png',title:'Delete'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
         <% end %>
       <% end %>

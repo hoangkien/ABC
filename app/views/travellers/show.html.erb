@@ -1,24 +1,22 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @traveller.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @traveller.address %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @traveller.phone %>
-</p>
-
-<p>
-  <strong>Device:</strong>
-  <%= @traveller.device_id %>
-</p>
+<table style="width:40%" class="tblList">
+	<tr>
+		<th><strong>Name:</strong></th>
+		<td><%= @traveller.name %></td>
+	</tr>
+	<tr>
+		<th><strong>Address:</strong></th>
+		<td><%= @traveller.address %></td>
+	</tr>
+	<tr>
+		<th><strong>Phone:</strong></th>
+		<td><%= @traveller.phone %></td>
+	</tr>
+	<tr>
+		<th><strong>Device:</strong></th>
+		<td><%= @traveller.device_id %></td>
+	</tr>
+</table>
 
 <%= link_to 'Edit', edit_traveller_path(@traveller) %> |
 <%= link_to 'Back', travellers_path %>

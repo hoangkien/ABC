@@ -34,11 +34,11 @@
           <td><%= truncate(device.name,length: 25) %></td>
           <td><%= Company.find(device.company_id).name%></td>
           <td><%= device.status %></td>
-          <td><%= device.lat %></td>
-          <td><%= device.lng%></td>
+          <td><%= device.lat == nil ? "Null"  : device.lat %></td>
+          <td><%= device.lng == nil ? "Null" : device.lng%></td>
           <td><%= device.created_at.strftime("%d/%m/%Y") if not device.created_at == nil %></td>
           <td><%= device.updated_at.strftime("%d/%m/%Y") if not device.updated_at == nil %></td>
-          <td align="center"><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,device %></td>
+          <td align="center"><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,device,method: :get %></td>
         </tr>
     <% end %>
   <%end %>

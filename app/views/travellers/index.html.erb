@@ -36,12 +36,12 @@
               <td><%= traveller.name %></td>
               <td><%= traveller.address %></td>
               <td><%= traveller.phone%></td>
-              <td><%= traveller.device_id %></td>
-              <td><%= traveller.gender == 0 ? "Male" : "Female"%></td>
+              <td><%= traveller.device_id==0 ? "null" : traveller.device_id %></td>
+              <td><%= traveller.gender == false ? "Male" : "Female"%></td>
               <td><%= traveller.email%></td>
-              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,traveller %>
-              <%= link_to image_tag('templates/edit.png') ,edit_traveller_path(traveller) %>
-              <%= link_to image_tag('templates/Delete.png'), traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,traveller %>
+              <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_traveller_path(traveller) %>
+              <%= link_to image_tag('templates/Delete.png',title:'Delete'), traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
         <% end %>
       <%end%>

@@ -41,6 +41,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'paperclip'
 gem 'responders'
+gem 'gcm'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -56,6 +57,6 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring','~> 1.3.1'
 end
 

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  require'digest/md5'
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password, :update_password]
   before_action :check_permission ,only: [:index,:destroy]
 
@@ -32,8 +32,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if params[:id] != session[:id].to_s
-         redirect_to edit_user_path(session[:id])
+    if session[:group] == "company"
+      if params[:id] != session[:id].to_s
+           redirect_to edit_user_path(session[:id])
+      end
     end
     @user.company
     @company = Company.all
@@ -45,29 +47,47 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user_params = user_params
-     @params_company = company_params
-    if user_params["group"] == 'company'
-      if company_params[:name].present? == true
-        check_company = Company.where(name:company_params[:name]).first
-        if check_company.nil? 
-          @params_company[:code] = Company.generate_company_code
-          @user_params[:company_id] = Company.last.id
-        else
-          @company_errors="has already been taken"
+    @user = User.new(@user_params)
+    @params_company = company_params
+      if user_params["group"] == 'company'#  group is company
+        if company_params[:name].present? == true # company name is valid
+          check_company = Company.where(name:company_params[:name]).first
+          if check_company.nil? 
+            @params_company[:code] = Company.generate_company_code
+            @company = Company.new( @params_company)
+            if @user.save
+                if @company.save
+                  @user_params[:company_id] = Company.last.id
+                  user = User.last
+                  if user.update_attributes(company_id: @user_params[:company_id])
+                     user = User.last
+                      redirect_to users_url, notice: 'User was successfully created.' 
+                  else
+                      render :new 
+                  end
+                end
+            else
+              render :new
+            end
+          else
+            @company_errors="has already been taken"
+            render :new
+          end
+        elsif company_params[:address].present? == false# company address is invalid 
+          @company_errors = "Can't be blank"
+          @company_errors_address = "Can't be blank"
+          render :new
+        else#company address is valid
+          @company_errors_address = "Can't be blank"
+          errors[:base] << "Can't be blank"
+          render :new
         end
       else
-        @company_errors = "Can't be blank"
-      end
-      if company_params[:address].present? == false
-        @company_errors_address = "Can't be blank"
-      end
-    end
-    @company = Company.new( @params_company)
-    @user = User.new(@user_params)
-    if @user.save && @company.save
-         redirect_to users_url, notice: 'User was successfully created.' 
-      else
-         render :new 
+        if @user.save
+            redirect_to users_url, notice: 'User was successfully created.' 
+        else
+            render :new 
+        end
       end
     end
 
@@ -106,7 +126,8 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    @user.update(user_params_for_changing_password)
+    password = user_params_for_changing_password[:password]
+    @user.update(password:Digest::MD5.hexdigest(password))
     redirect_to users_path
   end
   private

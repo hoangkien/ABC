@@ -1,7 +1,7 @@
 
 <div class="top_in_center">
         <div class="action_button">
-            <%= button_to 'Edit', edit_company_path(@company), class: 'btn_small_blue', method: :get %>
+            <%= button_to 'Edit', edit_company_path(@company), class: 'btn_small_blue',style:'margin-left:10px', method: :get %>
             <%= button_to  'Back', companies_path, class: 'btn_small_blue', method: :get %>
         </div>
 </div>
@@ -10,6 +10,10 @@
   <tr>
     <th><strong>Name:</strong></th>
     <td> <%= @company.name %></td>
+  </tr>
+  <tr>
+    <th><strong>Manager:</strong></th>
+    <td><%= @company.user.name%></td>
   </tr>
   <tr>
     <th> <strong>Address:</strong></th>

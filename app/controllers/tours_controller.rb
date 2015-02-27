@@ -1,5 +1,6 @@
 class ToursController < ApplicationController
   before_action :set_tour, only: [:show, :edit, :update, :destroy,:list_user]
+  before_action :check_company, only:[:show,:edit]
   skip_before_action :set_tour , only: [:add_tourguide,:remove_tourguide]
   # GET /tours
   # GET /tours.json
@@ -42,14 +43,14 @@ class ToursController < ApplicationController
   # POST /tours.json
   def create
     @tour_params = tour_params
-    if session[:company_id]
+    if session[:group] == "company"
       @tour_params[:company_id] = session[:company_id]
     end
     @tour = Tour.new(@tour_params)
 
     respond_to do |format|
       if @tour.save
-        format.html { redirect_to @tour, notice: 'Tour was successfully created.' }
+        format.html { redirect_to tours_path, notice: 'Tour was successfully created.' }
         format.json { render :show, status: :created, location: @tour }
       else
         format.html { render :new }
@@ -90,12 +91,11 @@ class ToursController < ApplicationController
       @tourguide_list = @tour.tourguides
       if session[:group] == "admin"
         @tourguides = Tourguide.where("active = 0")
-      else
-        @tourguides = Tourguide.where("active = 0 and company_id=#{session[:company_id]}")
-      end
-      if session[:group] == "admin"
+        @travellers = Traveller.where("active =0 ")
         @devices = Device.where("status = 0")
       else
+        @tourguides = Tourguide.where("active = 0 and company_id=#{session[:company_id]}")
+        @travellers = Traveller.where("active = 0 and company_id =#{session[:company_id]}")
         @devices = Device.where("status = 0 and company_id = #{session[:company_id]}")
       end
   end
@@ -108,17 +108,24 @@ class ToursController < ApplicationController
     @tourguide.tours << @tour
     redirect_to list_user_path(params[:tour_id]),alert: 'Tourguide was successfully added.'
   end
+  def add_traveller
+    @traveller = Traveller.find(params[:traveller])
+    @traveller.update(active:1)
+    @tour = Tour.find(params[:tour_id])
+    @traveller.tours << @tour
+    redirect_to list_user_path(params[:tour_id]),alert: 'Traveller was successfully added.'
+  end
   def remove_traveller
     @tour=Tour.find(params[:tour_id])
     @traveller = Traveller.find(params[:traveller_id])
     unless @traveller.device_id == 0
       @device = Device.find(@traveller.device_id)
-      @device.update(status:0)
+      @device.update(status:0,lat:nil,lng:nil)
     end
     #delete traveller in tour
     @traveller.tours.delete(@tour)
     #delete device in traveller
-    @traveller.update(device_id:0)
+    @traveller.update(device_id:0,active:0)
     redirect_to list_user_path(params[:tour_id]), notice:"Traveller was successfully destroyed" 
     
   end
@@ -127,7 +134,7 @@ class ToursController < ApplicationController
     @tourguide = Tourguide.find(params[:tourguide_id])
     unless @tourguide.device_id == 0
       @device = Device.find(@tourguide.device_id)
-      @device.update(status:0)
+      @device.update(status:0,lat:nil,lng:nil)
     end
     #delete tourguide in tour
     @tourguide.tours.delete(@tour)
@@ -146,7 +153,7 @@ class ToursController < ApplicationController
       end
       
       device = Device.find(params[:device_id])
-      device.update(status:0)
+      device.update(status:0,lat:nil,lng:nil)
       redirect_to list_user_path(params[:tour_id])
   end
   def change_device
@@ -169,7 +176,14 @@ class ToursController < ApplicationController
     def set_tour
       @tour = Tour.find(params[:id])
     end
-
+    def check_company
+      if session[:group] == "company"
+        company_id_tour = Tour.find(params[:id]).company_id
+        if company_id_tour != session[:company_id]
+          redirect_to tours_path
+        end
+      end
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def tour_params
       params.require(:tour).permit(:name, :number_of_member, :information)

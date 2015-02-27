@@ -41,8 +41,8 @@
 																		name:@tourguide[:name],
 																		address:@tourguide[:address],
 																		tour_name:@tourguide.tours.first.name,
-																		lat:@device.lat,
-																		lng:@device.lng,
+																		lat:@device.lat == nil ? "" : @device.lat,
+																		lng:@device.lng == nil ? "" : @device.lng,
 																		phone:@tourguide[:phone],
 																		device_id:@device.id
 																		}
@@ -59,8 +59,8 @@
 													name:@traveller[:name],
 													address:@traveller[:address],
 													tour_name:@traveller.tours.first.name,
-													lat:@device.lat,
-													lng:@device.lng,
+													lat:@device.lat == nil ? "" : @device.lat,
+													lng:@device.lng == nil ? "" : @device.lng,
 													phone:@traveller[:phone],
 													device_id:@device.id
 												}

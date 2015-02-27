@@ -2,6 +2,8 @@ class Company < ActiveRecord::Base
   has_one :user
   has_many :tourguides
   has_many :travellers
+  has_many :devices,dependent: :destroy
+  has_many :tours, dependent: :destroy
   require 'securerandom'
 
   validates :name, :address, presence: true

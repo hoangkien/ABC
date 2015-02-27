@@ -38,8 +38,8 @@
               <td><%= tourguide.name %></td>
               <td><%= tourguide.address %></td>
               <td><%= tourguide.phone%></td>
-              <td><%= tourguide.device_id %></td>
-              <td><%= tourguide.gender%></td>
+              <td><%= tourguide.device_id == 0 ? "null": tourguide.device_id %></td>
+              <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td>
               <td><%= tourguide.email%></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tourguide %>
               <%= link_to image_tag('templates/edit.png') ,edit_tourguide_path(tourguide) %>

@@ -27,6 +27,9 @@ class SessionController < ApplicationController
   def destroy
     session[:account] = nil
     session[:group] = nil
+    if session[:company_id]
+      session[:company_id] = nil
+    end
     redirect_to sign_in_url
   end
 end

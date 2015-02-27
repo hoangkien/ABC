@@ -16,8 +16,7 @@
       <div class="cl"></div>
      <% if notice %>
       <p class="msgBlue"><%= notice %></p>
-      <% end    %>
-
+      <% end %>
     <table width="100%" class="tblList">
       <tr>
         <th width="10%">Account </th>
@@ -29,25 +28,31 @@
         <th width="10%">Updated at</th>
         <th width="10%">Action</th>
       </tr>
-      <% @users.each do |user| %>
-          <tr>
-            <td><%= user.account %></td>
-            <td><%= user.name %></td>
-            <td><%= truncate(strip_tags(user.address),length: 80)%></td>
-            <td><%= user.group %></td>
-            <td><% if  user.company == nil %>
-                      No company
-                  <% else %>
-                      <%= user.company.name  %>
-                  <% end %>
-            </td>
-            <td><%= user.created_at.strftime("%d/%m/%Y") if not user.created_at == nil %></td>
-            <td><%= user.updated_at.strftime("%d/%m/%Y") if not user.updated_at == nil %></td>
-            <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,user %>
-            <%= link_to image_tag('templates/edit.png') ,edit_user_path(user),method: :get %>
-            <%= link_to image_tag('templates/Delete.png'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-      <% end %>
+      <% if @users.count == 0 %>
+      <tr>
+        <td colspan="8" style="text-align:center">No Data</td>
+      </tr>
+      <%else%>
+        <% @users.each do |user| %>
+            <tr>
+              <td><%= user.account %></td>
+              <td><%= user.name %></td>
+              <td><%= truncate(strip_tags(user.address),length: 80)%></td>
+              <td><%= user.group %></td>
+              <td><% if  user.company == nil %>
+                        No company
+                    <% else %>
+                        <%= user.company.name  %>
+                    <% end %>
+              </td>
+              <td><%= user.created_at.strftime("%d/%m/%Y") if not user.created_at == nil %></td>
+              <td><%= user.updated_at.strftime("%d/%m/%Y") if not user.updated_at == nil %></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,user %>
+              <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_user_path(user),method: :get %>
+              <%= link_to image_tag('templates/Delete.png',title:'Delete'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+      <%end%>
     </table>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @users %> </div>

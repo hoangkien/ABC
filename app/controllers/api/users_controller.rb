@@ -1,6 +1,7 @@
 
 	class Api::UsersController < ApplicationController
 		skip_before_action :authorize
+		require 'gcm'
 		def list
 			#check the code device already in the list
 			#check joined the tour
@@ -27,8 +28,8 @@
 									@traveller_in_tour << {     id:travel.id ,
 												                name: travel.name,
 												                phone: travel.phone,
-												                lat: @device.lat,
-												                lng: @device.lng,
+												                lat:@device.lat == nil ? "" : @device.lat,
+																lng:@device.lng == nil ? "" : @device.lng,
 												                address: travel.address,
 												                gender: travel.gender == false ? "male" : "female", 
 												                email: travel.email
@@ -47,8 +48,8 @@
 									@tourguide_in_tour << {     id:tourguide.id ,
 												                name: tourguide.name,
 												                phone: tourguide.phone,
-												                lat: @device.lat,
-												                lng: @device.lng,
+												                lat:@device.lat == nil ? "" : @device.lat,
+																lng:@device.lng == nil ? "" : @device.lng,
 												                address: tourguide.address,
 												                gender: tourguide.gender == false ? "male" : "female", 
 												                email: tourguide.email
@@ -110,6 +111,14 @@
 			
 		end
 		def push
+			#khoi tao GCM
+			gcm = GCM.new("AIzaSyAX1IPKuBO9CW7u6c1sfCvpykfZLGUnbkk")
+			#get list registration_id traveller
+			registration_ids=[""]
+			#get messeage
+			options = {data: {score: "123"}, collapse_key: "updated_score"}
+			#send GCM
+			response = gcm.send(registration_ids, options)
 
 		end
 		private
