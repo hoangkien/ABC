@@ -179,3 +179,6 @@ textarea{
 	width: 150px;
 	height: 25px;
 }
+.dataTables_length ,.dataTables_filter,.dataTables_info,.paging_simple_numbers{
+	display: none;
+}

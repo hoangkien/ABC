@@ -97,8 +97,12 @@
 			if params[:device_code]
 				@device = Device.where(code:params[:device_code]).first
 				@traveller = Traveller.where(device_id:@device.id).first
+				@tour = @traveller.tours.first
+				@company = @device.company
 				@params_feedback = params_feedback
 				@params_feedback[:traveller_id] = @traveller.id
+				@params_feedback[:tour_id] = @tour.id
+				@params_feedback[:company_id] = @company.id
 				@feedback = Feedback.new(@params_feedback)
 				if @feedback.save
 					render json:{status:0, message:"success"}

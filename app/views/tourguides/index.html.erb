@@ -18,16 +18,21 @@
       <p class="msgBlue"><%= notice %></p>
       <% end    %>
 
-    <table width="100%" class="tblList">
+    <table width="100%" class="tblList" id="list">
+    <thead>
       <tr>
+        <th width="1%">ID</th>
         <th width="10%">Name </th>
-        <th width="15%">Address</th>
-        <th width="20%">Phone</th>
-        <th width="10%">Device Name</th>
         <th width="5%">Gender</th>
-        <th width="15%">Email</th>
+        <th width="15%">Address</th>
+        <th width="10%">Phone</th>
+        <th width="5%">Active</th>
+        <th width="10%">Device Name</th>
+        <th width="15%">Company</th>
         <th width="10%">Action</th>
       </tr>
+    </thead>
+    <tbody>
       <% if @tourguides.count == 0%>
         <tr>
           <td colspan="7" style="text-align:center"> No Data</td>
@@ -35,18 +40,23 @@
       <% else %> 
         <% @tourguides.each do |tourguide| %>
             <tr>
+              <td><%= @stt %></td>
               <td><%= tourguide.name %></td>
+              <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td>
               <td><%= tourguide.address %></td>
               <td><%= tourguide.phone%></td>
+              <td><%= tourguide.active%></td>
               <td><%= tourguide.device_id == 0 ? "null": tourguide.device_id %></td>
-              <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td>
-              <td><%= tourguide.email%></td>
+              <td><%= tourguide.company == nil ? "Null" : tourguide.company.name %></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tourguide %>
               <%= link_to image_tag('templates/edit.png') ,edit_tourguide_path(tourguide) %>
               <%= link_to image_tag('templates/Delete.png'), tourguide, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
+            <% @stt +=1%>
         <% end %>
       <%end%>
+      </tbody>
+      <tfoot></tfoot>
     </table>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @tourguides %> </div>

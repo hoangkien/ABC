@@ -1,6 +1,6 @@
 class Traveller < ActiveRecord::Base
-
   has_and_belongs_to_many :tours
+  belongs_to :company
   has_one :device
   validates :name,:phone, presence:true
   def self.search(query,company_id = nil)

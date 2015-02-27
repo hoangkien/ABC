@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150226064627) do
+ActiveRecord::Schema.define(version: 20150227020030) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(version: 20150226064627) do
     t.integer  "traveller_id",    limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "tour_id",         limit: 4
+    t.integer  "company_id",      limit: 4
   end
 
   create_table "gcm_registrations", force: :cascade do |t|
@@ -70,7 +72,7 @@ ActiveRecord::Schema.define(version: 20150226064627) do
     t.boolean  "active",     limit: 1,     default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.integer  "gender",     limit: 1
+    t.integer  "gender",     limit: 1,     default: 0
     t.string   "email",      limit: 255
     t.integer  "company_id", limit: 4
   end
@@ -103,12 +105,12 @@ ActiveRecord::Schema.define(version: 20150226064627) do
     t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
     t.integer  "device_id",  limit: 4,     default: 0
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "gender",     limit: 1
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "gender",     limit: 1,     default: false
     t.string   "email",      limit: 255
     t.integer  "company_id", limit: 4
-    t.integer  "active",     limit: 4
+    t.integer  "active",     limit: 4,     default: 0
   end
 
   create_table "users", force: :cascade do |t|
@@ -117,11 +119,11 @@ ActiveRecord::Schema.define(version: 20150226064627) do
     t.string   "name",       limit: 255
     t.text     "address",    limit: 65535
     t.string   "group",      limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "company_id", limit: 4
     t.string   "email",      limit: 255
-    t.integer  "gender",     limit: 1
+    t.integer  "gender",     limit: 1,     default: 0
   end
 
 end

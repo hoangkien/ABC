@@ -11,10 +11,9 @@ class UsersController < ApplicationController
     if params[:search]
       @users = User.search(params[:search]).order("created_at DESC").page(params[:page])
     else
-      @users = User.order(:account).page(params[:page])
+       @users = User.order(:account).page(params[:page])
     end
   end
-
   # GET /users/1
   # GET /users/1.json
 
@@ -24,7 +23,6 @@ class UsersController < ApplicationController
   end
   def show
   end
-
   # GET /users/new
   def new
     @user = User.new
@@ -79,7 +77,6 @@ class UsersController < ApplicationController
           render :new
         else#company address is valid
           @company_errors_address = "Can't be blank"
-          errors[:base] << "Can't be blank"
           render :new
         end
       else
@@ -157,5 +154,8 @@ class UsersController < ApplicationController
     end
     def user_params_for_changing_password
       params.require(:user).permit( :password, :password_confirmation)
+    end
+    def params_fillter
+      params.require(:fillter).permit(:account,:address,:name,:group,:company,:created_at)
     end
 end

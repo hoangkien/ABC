@@ -13,17 +13,21 @@
     <p class="msgBlue"><%= notice %></p>
 <% end    %>
 
-<table width="100%" class="tblList">
+<table width="100%" class="tblList" id="list">
+<thead>
   <tr>
+    <th width="2%">ID</th>
     <th width="18%">Device Name </th>
     <th width="15%">Company</th>
     <th width="3%">Status</th>
     <th width="15%">Lat</th>
     <th width="15%">Lng</th>
     <th width="10%">Create at</th>
-    <th width="10%">Updated at</th>
+<!--     <th width="10%">Updated at</th> -->
     <th width="10%">Action</th>
   </tr>
+</thead>
+<tbody>
   <% if @devices.count == 0 %>
     <tr>
       <td colspan="8" style="text-align:center"> No Data</td>
@@ -31,17 +35,21 @@
   <% else %>
     <% @devices.each do |device| %>
         <tr>
+          <td><%= @stt %></td>
           <td><%= truncate(device.name,length: 25) %></td>
           <td><%= Company.find(device.company_id).name%></td>
           <td><%= device.status %></td>
           <td><%= device.lat == nil ? "Null"  : device.lat %></td>
           <td><%= device.lng == nil ? "Null" : device.lng%></td>
           <td><%= device.created_at.strftime("%d/%m/%Y") if not device.created_at == nil %></td>
-          <td><%= device.updated_at.strftime("%d/%m/%Y") if not device.updated_at == nil %></td>
+          <!-- <td><%= device.updated_at.strftime("%d/%m/%Y") if not device.updated_at == nil %></td> -->  
           <td align="center"><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,device,method: :get %></td>
         </tr>
+        <% @stt +=1%>
     <% end %>
   <%end %>
+</tbody>
+<tfoot></tfoot>
 </table>
 <!--table end-->
 <br>

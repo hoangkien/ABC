@@ -1,4 +1,3 @@
-
 <div class="top_in_center">
   <div class="search_form">
     <%= form_tag users_path, :method => 'get' do %>
@@ -17,17 +16,32 @@
      <% if notice %>
       <p class="msgBlue"><%= notice %></p>
       <% end %>
-    <table width="100%" class="tblList">
-      <tr>
-        <th width="10%">Account </th>
-        <th width="15%">User name</th>
-        <th width="20%">Address</th>
-        <th width="10%">Group</th>
-        <th width="15%">Company</th>
-        <th width="10%">Created at</th>
-        <th width="10%">Updated at</th>
-        <th width="10%">Action</th>
-      </tr>
+    <table width="100%" class="tblList" id="list">
+      <thead>
+        <tr>
+          <th width="3%">ID</th>
+          <th width="10%">Account </th>
+          <th width="15%">User name</th>
+          <th width="20%">Address</th>
+          <th width="10%">Group</th>
+          <th width="15%">Company</th>
+          <th width="10%">Created at</th>
+          <!-- <th width="10%">Updated at</th> -->
+          <th width="10%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+     <!--  <%= form_tag users_path, :method =>'get' do %>
+        <tr>
+          <td width="10%"><%= text_field_tag'fillter[account]',nil,style:'width:100%'%></td>
+          <td width="15%"><%= text_field_tag'fillter[name]',nil,style:'width:100%'%></td>
+          <td width="20%"><%= text_field_tag'fillter[address]',nil,style:'width:100%'%></td>
+          <td width="10%"><%= text_field_tag'fillter[group]',nil,style:'width:100%'%></td>
+          <td width="15%"><%= text_field_tag'fillter[company]',nil,style:'width:100%'%></td>
+          <td width="10%"><%= text_field_tag'fillter[created_at]',nil,style:'width:100%'%></td>
+          <td width="10%" style="text-align:center"><%= submit_tag'search'%></td>
+        </tr>
+      <% end -%> -->
       <% if @users.count == 0 %>
       <tr>
         <td colspan="8" style="text-align:center">No Data</td>
@@ -35,6 +49,7 @@
       <%else%>
         <% @users.each do |user| %>
             <tr>
+              <td><%= @stt %></td>
               <td><%= user.account %></td>
               <td><%= user.name %></td>
               <td><%= truncate(strip_tags(user.address),length: 80)%></td>
@@ -46,14 +61,19 @@
                     <% end %>
               </td>
               <td><%= user.created_at.strftime("%d/%m/%Y") if not user.created_at == nil %></td>
-              <td><%= user.updated_at.strftime("%d/%m/%Y") if not user.updated_at == nil %></td>
+              <!-- <td><%= user.updated_at.strftime("%d/%m/%Y") if not user.updated_at == nil %></td> -->
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,user %>
               <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_user_path(user),method: :get %>
               <%= link_to image_tag('templates/Delete.png',title:'Delete'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
+            <% @stt +=1%>
         <% end %>
       <%end%>
+      </tbody>
+      <tfoot>
+      </tfoot>
     </table>
       <!--table end-->
-      <br><div class="paginate"> <%= paginate @users %> </div>
+      <br><div class="paginate"> <%= paginate @users,:params => {:controller => 'users', :action => 'index'} %> </div>
+
 

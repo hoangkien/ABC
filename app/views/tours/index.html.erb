@@ -18,33 +18,43 @@
       <p class="msgBlue"><%= notice %></p>
       <% end    %>
 
-    <table width="100%" class="tblList">
+    <table width="100%" class="tblList" id="list">
+    <thead>
       <tr>
+        <th width="3%">ID</th>
         <th width="10%">Name </th>
-        <th width="15%">Number of Member</th>
+        <th width="5%">Number</th>
         <th width="20%">Information</th>
         <th width="10%">List User</th>
-        <th width="10%">Created at</th>
-        <th width="10%">Updated at</th>
-        <th width="10%">Action</th>
+        <th width="10%">Company</th>
+        <th width="7%">Created at</th>
+<!--         <th width="7%">Updated at</th> -->
+        <th width="7%">Action</th>
       </tr>
+    </thead>
+    <tbody>
       <% if @tours.count == 0 %>
         <tr><td colspan="7" style="text-align:center">No Data</td></tr>
       <%else%>
         <% @tours.each do |tour| %>
             <tr>
-              <td><%= tour.name %></td>
+              <td><%= @stt %></td>
+              <td><%= truncate(tour.name, length:15)%></td>
               <td><%= tour.number_of_member %></td>
               <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
               <td><%= link_to"List Users",list_user_path(tour), method: :get%></td>
+              <td><%= truncate(tour.company.name,length:25)%></td>
               <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
-              <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td>
+              <!-- <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td> -->
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,tour,method: :get %>
               <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_tour_path(tour),method: :get %>
               <%= link_to image_tag('templates/Delete.png',title:'Delete'), tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
+            <% @stt +=1 %>
         <% end %>
       <% end %>
+    </tbody>
+    <tfoot></tfoot>
     </table>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @tours %> </div>

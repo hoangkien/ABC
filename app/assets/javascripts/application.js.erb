@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+
 //= require_tree .
 
 $(document).ready(function() {
@@ -31,7 +31,8 @@ $(document).ready(function() {
         $("#center .new_form .company").css("display","none");
     }
     $("#center .new_form #user_group").change(changeGroup);
-
+    $('#list').DataTable();
+    $('#list1').DataTable();
     function changeGroup(){
         console.log(2);
         console.log($("#center .new_form #user_group").val());

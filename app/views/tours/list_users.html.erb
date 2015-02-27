@@ -85,20 +85,24 @@
 	<% if notice %>
 		<p class="msgBlue"><%= notice %></p>
 	<% end    %>
-	<table class="tblList" width="100%">
+	<table class="tblList" width="100%" id="list">
+	<thead>
 		<tr>
-			 <th width="3%">STT</th>
+			 <th width="3%">ID</th>
 			<th width="40%">Name</th>
 			<th width="20%">Phone</th>
 			<th>Device</th>
 			<th width="15%">Action</th>	
 		</tr>
+	</thead>
+	<tbody>
 		<% if @traveller_list.count == 0 %>
 			<tr><td colspan="5" style="text-align:center"> No Data</td></tr>
 		<% else %>
 			<% @traveller_list.each do |traveller|%>
 			<tr>
-				<td>1</td>
+
+				<td><%= @stt%></td>
 				<td><%= traveller.name %></td>
 				<td><%= traveller.phone %></td>
 				<td>
@@ -111,8 +115,11 @@
 					</td>
 				<td><%= link_to"Delete",remove_traveller_path(params[:id],traveller.id)%></td>
 			</tr>
+			<% @stt +=1%>
 			<% end %>
 		<% end %>
+	</tbody>
+	<tfoot></tfoot>
 		</table> 
 </div>
 <div class="tourguide" style="margin-top:10px">
@@ -127,20 +134,24 @@
 	<% if alert %>
 		<p class="msgBlue"><%= alert %></p>
 	<% end    %>
-	<table class="tblList" width="100%">
+	<table class="tblList" width="100%" id="list1">
+	<thead>
 		<tr>
-			<th width="3%">STT</th>
+			<th width="3%">ID</th>
 			<th width="40%">Name</th>
 			<th width="20%">Phone</th>
 			<th>Device</th>
 			<th width="15%">Action</th>
 		</tr>
+	</thead>
+	<tbody>
 		<% if @tourguide_list.count == 0 %>
 			<tr><td colspan="5" style="text-align:center">No Data</td></tr>
 		<% else %>
+			<% @id = 1 %>
 			<%@tourguide_list.each do |tourguide|%>
 				<tr>
-					<td>1</td>	
+					<td><%= @id %></td>	
 					<td><%= tourguide.name %></td>
 					<td><%= tourguide.phone %></td>
 					<td>
@@ -153,8 +164,11 @@
 					</td>
 					<td><%= link_to"Delete", remove_tourguide_path(params[:id],tourguide.id)%></td>
 				</tr>
+				<% @id +=1 %>
 			<% end %>
 		<% end %>
+	</tbody>
+	<tfoot></tfoot>
 	</table>
 </div>
 </div>
