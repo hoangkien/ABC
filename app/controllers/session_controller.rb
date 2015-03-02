@@ -30,6 +30,7 @@ class SessionController < ApplicationController
     if session[:company_id]
       session[:company_id] = nil
     end
+    # abort(session[:company_id].to_s)
     redirect_to sign_in_url
   end
 end

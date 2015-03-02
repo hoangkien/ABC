@@ -74,6 +74,8 @@ GEM
     debugger-linecache (1.2.0)
     erubis (2.7.0)
     execjs (2.3.0)
+    filterrific (2.0.3)
+      rails (>= 3.1.0)
     gcm (0.1.0)
       httparty
       json
@@ -195,9 +197,10 @@ DEPENDENCIES
   ckeditor!
   coffee-rails (~> 4.1.0)
   country_select
+  filterrific
   gcm
   jbuilder (~> 2.0)
-  jquery-rails
+  jquery-rails (>= 0.2.5)
   kaminari
   mysql2
   paperclip

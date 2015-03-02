@@ -9,26 +9,26 @@
     <% end %>
 
   </div>
-          <div class="action_button">
-        <%= button_to 'New tourguide', new_tourguide_path, method: 'get', class:'btn_medium_blue' %>
-                </div>
+  <div class="action_button">
+    <%= button_to 'New tourguide', new_tourguide_path, method: 'get', class:'btn_medium_blue' %>
+  </div>
 </div>
       <div class="cl"></div>
      <% if notice %>
       <p class="msgBlue"><%= notice %></p>
       <% end    %>
-
+    <div id="reload">
     <table width="100%" class="tblList" id="list">
     <thead>
       <tr>
-        <th width="1%">ID</th>
-        <th width="10%">Name </th>
-        <th width="5%">Gender</th>
-        <th width="15%">Address</th>
+        <th width="1%">ID </th>
+        <th width="13%">Name </th>
+        <!-- <th width="5%">Gender</th> -->
+        <th width="20%">Address</th>
         <th width="10%">Phone</th>
-        <th width="5%">Active</th>
-        <th width="10%">Device Name</th>
+        <th width="15%">Device Name</th>
         <th width="15%">Company</th>
+        <th width="3%">Active</th>
         <th width="10%">Action</th>
       </tr>
     </thead>
@@ -41,16 +41,16 @@
         <% @tourguides.each do |tourguide| %>
             <tr>
               <td><%= @stt %></td>
-              <td><%= tourguide.name %></td>
-              <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td>
+              <td><%= truncate(tourguide.name,length:20) %></td>
+              <!-- <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td> -->
               <td><%= tourguide.address %></td>
               <td><%= tourguide.phone%></td>
+              <td><%= tourguide.device_id == 0 ? "null": truncate(tourguide.device_id.to_s, length:20) %></td>
+              <td><%= tourguide.company == nil ? "Null" : truncate(tourguide.company.name,length:20) %></td>
               <td><%= tourguide.active%></td>
-              <td><%= tourguide.device_id == 0 ? "null": tourguide.device_id %></td>
-              <td><%= tourguide.company == nil ? "Null" : tourguide.company.name %></td>
-              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,tourguide %>
-              <%= link_to image_tag('templates/edit.png') ,edit_tourguide_path(tourguide) %>
-              <%= link_to image_tag('templates/Delete.png'), tourguide, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:"View") ,tourguide %>
+              <%= link_to image_tag('templates/edit.png',title:"Edit") ,edit_tourguide_path(tourguide) %>
+              <%= link_to image_tag('templates/Delete.png',title:"Delete"), tourguide, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
             <% @stt +=1%>
         <% end %>
@@ -58,6 +58,7 @@
       </tbody>
       <tfoot></tfoot>
     </table>
+  </div>
       <!--table end-->
       <br><div class="paginate"> <%= paginate @tourguides %> </div>
 

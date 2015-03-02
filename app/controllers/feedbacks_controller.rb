@@ -4,11 +4,30 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    if params[:search]
-      @feedbacks = Feedback.search(params[:search]).order("created_at DESC").page(params[:page])
+    if session[:group] == "admin"
+      if params[:search]
+        @feedbacks = Feedback.search(params[:search].strip).order("created_at DESC").page(params[:page])
+      else
+        @feedbacks = Feedback.order(:id).page(params[:page])
+      end
     else
-      @feedbacks = Feedback.order(:traveller_id).page(params[:page])
+      company_id = User.where(account:session[:account]).first.company_id
+      if params[:search]
+          @feedbacks = Feedback.search(params[:search].strip,company_id).order("created_at DESC").page(params[:page])
+      else
+        @feedbacks = Feedback.where(company_id:company_id).order(:id).page(params[:page])
+      end 
     end
+      # @filterrific = initialize_filterrific(
+      #   Feedback,
+      #   params[:filterrific]
+      # ) or return
+      # @feedbacks = @filterrific.find.page(params[:page])
+
+      # respond_to do |format|
+      #   format.html
+      #   format.js
+      #  end
   end
 
   # GET /feedbacks/1
@@ -53,6 +72,9 @@ class FeedbacksController < ApplicationController
         format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
+  end
+  def data
+    
   end
 
   # DELETE /feedbacks/1

@@ -14,9 +14,9 @@
 //= require jquery_ujs
 
 //= require_tree .
+//= require filterrific/filterrific-jquery
 
 $(document).ready(function() {
-     console.log(1)
      var url = window.location.pathname.split("/");
      // alert(url[1]);
       $("#menu_nav ul li."+url[1]+" a").addClass('active');
@@ -33,6 +33,37 @@ $(document).ready(function() {
     $("#center .new_form #user_group").change(changeGroup);
     $('#list').DataTable();
     $('#list1').DataTable();
+    $('#feedbacks_search').submit(function () {
+        $.get(this.action, $(this).serialize(), null, 'script');
+        return false;
+    });
+    $('#feedbacks_search input').keyup(function () {
+      $.get($('#feedbacks_search').attr('action'),$('#feedbacks_search').serialize(), null, 'script');
+        var table = $('#example').DataTable( {
+            ajax: "data.json"
+        } );
+      return false;
+    });
+    //datepicker
+    $( "#fillter_created_at" ).datepicker();
+    // jQuery('#fillter_created_at').datetimepicker({
+     //  lang:'vi',
+     //  i18n:{
+     //    fn:{
+     //     months:[
+     //      'Januar','Februar','März','April',
+     //      'Mai','Juni','Juli','August',
+     //      'September','Oktober','November','Dezember'
+     //     ],
+     //     dayOfWeek:[
+     //      "So.", "Mo", "Di", "Mi", 
+     //      "Do", "Fr", "Sa."
+     //     ]
+     //    }
+     //  },
+     //  timepicker:false,
+     //  format:'d/m/Y'
+     // });
     function changeGroup(){
         console.log(2);
         console.log($("#center .new_form #user_group").val());

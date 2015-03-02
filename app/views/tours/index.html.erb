@@ -40,7 +40,7 @@
             <tr>
               <td><%= @stt %></td>
               <td><%= truncate(tour.name, length:15)%></td>
-              <td><%= tour.number_of_member %></td>
+              <td><%= tour.number_of_member %> Person</td>
               <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
               <td><%= link_to"List Users",list_user_path(tour), method: :get%></td>
               <td><%= truncate(tour.company.name,length:25)%></td>

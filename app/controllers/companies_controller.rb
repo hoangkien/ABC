@@ -7,7 +7,7 @@ class CompaniesController < ApplicationController
 
   def index
     if params[:search]
-      @companies = Company.search(params[:search]).order("created_at DESC").page(params[:page])
+      @companies = Company.search(params[:search].strip).order("created_at DESC").page(params[:page])
     else
       @companies = Company.order(:name).page(params[:page])
     end

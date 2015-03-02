@@ -6,13 +6,13 @@ class TourguidesController < ApplicationController
   def index
     if session[:group] == "admin"
       if params[:search]
-        @tourguides = Tourguide.search(params[:search]).order("created_at DESC").page(params[:page])
+        @tourguides = Tourguide.search(params[:search].strip).order("created_at DESC").page(params[:page])
       else
         @tourguides = Tourguide.order(:name).page(params[:page])
       end
     else
       if params[:search]
-        @tourguides = Tourguide.search(params[:search],session[:company_id]).order("created_at DESC").page(params[:page])
+        @tourguides = Tourguide.search(params[:search].strip,session[:company_id]).order("created_at DESC").page(params[:page])
       else
         @tourguides = Tourguide.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end
@@ -46,7 +46,10 @@ class TourguidesController < ApplicationController
       @tourguide_params[:company_id] = session[:company_id]
     end
     @tourguide = Tourguide.new(@tourguide_params)
-
+    if @tourguide_params['images']
+      @tourguide['images'] = @tourguide_params['images'].original_filename
+      upload = Tourguide.upload(@tourguide_params)
+    end
     respond_to do |format|
       if @tourguide.save
         format.html { redirect_to @tourguide, notice: 'Tourguide was successfully created.' }
@@ -97,6 +100,6 @@ class TourguidesController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def tourguide_params
-      params.require(:tourguide).permit(:name, :address, :phone, :device_id, :active,:email,:gender)
+      params.require(:tourguide).permit(:name, :address, :phone, :device_id, :active,:email,:gender,:images)
     end
 end

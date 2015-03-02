@@ -6,13 +6,13 @@ class TravellersController < ApplicationController
   def index
     if session[:group] == "admin"
       if params[:search]
-        @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
+        @travellers = Traveller.search(params[:search].strip).order("created_at DESC").page(params[:page])
       else
         @travellers = Traveller.order(:name).page(params[:page])
       end
     else
       if params[:search]
-        @travellers = Traveller.search(params[:search],session[:company_id]).order("created_at DESC").page(params[:page])
+        @travellers = Traveller.search(params[:search].strip,session[:company_id]).order("created_at DESC").page(params[:page])
       else
         @travellers = Traveller.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end 
@@ -55,8 +55,10 @@ class TravellersController < ApplicationController
   # POST /travellers.json
   def create
     if session[:group] == "company"
+      #select device of company where status = 0
       @devices = Device.where(status:0,company_id:session[:company_id])
     else
+      #select all device where status  = 0
       @devices = Device.where(status:0)
     end
     @traveller_params = traveller_params
@@ -64,6 +66,10 @@ class TravellersController < ApplicationController
       @traveller_params[:company_id] = session[:company_id]
     end
     @traveller = Traveller.new(@traveller_params)
+    if @traveller_params['images']
+      @traveller['images'] = @traveller_params['images'].original_filename
+      upload = Traveller.upload(@traveller_params)
+    end
     respond_to do |format|
       #if params[:tour_id]
       if @traveller.save && params[:tour_id]
@@ -124,6 +130,6 @@ class TravellersController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def traveller_params
-      params.require(:traveller).permit(:name, :address, :phone, :device_id,:gender)
+      params.require(:traveller).permit(:name, :address, :phone, :device_id,:gender,:images)
     end
 end

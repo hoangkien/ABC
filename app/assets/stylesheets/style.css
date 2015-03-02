@@ -122,7 +122,7 @@ border-radius: 3px; font-weight:bold; line-height:20px; }
 .btn_large_grey { background-position: -273px -63px; width:250px; height: 29px; color:#5d5d5d; font-weight:bold; }
 
 
-.tblList th{ background:url(templates/table_th.png) repeat-x; border:1px solid #c5c5c5; padding:5px; font-weight:bold; vertical-align:middle;}
+.tblList th{ background:url(templates/table_th.png); background-size: 100%; border:1px solid #c5c5c5; padding:5px; font-weight:bold; vertical-align:middle;}
 .tblList td{ border:1px solid #c5c5c5; padding:5px;}
 .tblList tr:hover{ background:#f1f1f1;}
 .tblList td img{ margin-right:5px; vertical-align:middle; }

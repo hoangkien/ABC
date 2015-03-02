@@ -1,50 +1,36 @@
 
 <div class="top_in_center">
   <div class="search_form">
-    <%= form_tag feedbacks_path, :method => 'get' do %>
+    <%= form_tag feedbacks_path,:id => "feedbacks_search", :method => 'get' do %>
         <p>
-          <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
+          <%= text_field_tag("search", params[:search], :placeholder => "type search key",id:"search")%>
           <%= submit_tag "Search",class:'btn_small_blue', :name => nil %>
         </p>
     <% end %>
-
   </div>
 </div>
+  <div id="load">
       <div class="cl"></div>
      <% if notice %>
       <p class="msgBlue"><%= notice %></p>
       <% end    %>
-
-    <table width="100%" class="tblList" id="list">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th width="10%">Traveller </th>
-        <th>Tour</th>
-        <th>Company</th>
-        <th width="15%">Quantity Service</th>
-        <th width="20%">Comment</th>
-        <th width="10%">Created at</th>
-        <th width="10%">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @feedbacks.each do |feedback| %>
-          <tr>
-            <td><%= @stt%></td>
-            <td><%= Traveller.find(feedback.traveller_id).name %></td>
-            <td><%= Tour.find(feedback.tour_id).name%></td>
-            <td><%= Company.find(feedback.company_id).name%></td>
-            <td><%= feedback.quantiy_service %></td>
-            <td><%= truncate(strip_tags(feedback.comment),length: 80)%></td>
-            <td><%= feedback.created_at.strftime("%d/%m/%Y") if not feedback.created_at == nil %></td>
-            <td style="text-align:center"><%= link_to image_tag('templates/view_icon.ico',size:"16x16") ,feedback %>
-          </tr>
-          <% @stt +=1 %>
-      <% end %>
-    </tbody>
-    <tfoot></tfoot>
-    </table>
-      <!--table end-->
-      <br><div class="paginate"> <%= paginate @feedbacks %> </div>
+        <table width="100%" class="tblList" id="list">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th width="10%">Traveller </th>
+              <th>Tour</th>
+              <th>Company</th>
+              <th width="15%">Quantity Service</th>
+              <th width="20%">Comment</th>
+              <th width="10%">Created at</th>
+              <th width="10%">Action</th>
+            </tr>
+          </thead>
+           <tbody id="feedbacks"><%= render'feedbacks'%></tbody>
+          <tfoot></tfoot>
+          </table>
+  </div>
+    <!--table end-->
+    <br><div class="paginate"> <%= paginate @feedbacks %> </div>
 

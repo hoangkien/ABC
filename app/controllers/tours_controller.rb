@@ -7,13 +7,13 @@ class ToursController < ApplicationController
   def index
      if session[:group] == "admin"
       if params[:search]
-        @tours = Tour.search(params[:search]).order("created_at DESC").page(params[:page])
+        @tours = Tour.search(params[:search].strip).order("created_at DESC").page(params[:page])
       else
         @tours = Tour.order(:name).page(params[:page])
       end
     else
       if params[:search]
-        @tours = Tour.search(params[:search],session[:company_id]).order("created_at DESC").page(params[:page])
+        @tours = Tour.search(params[:search],session[:company_id].strip).order("created_at DESC").page(params[:page])
       else
         @tours = Tour.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end
