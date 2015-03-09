@@ -1,14 +1,13 @@
 
 <div class="top_in_center">
-  <div class="search_form">
+<!--   <div class="search_form">
     <%= form_tag travellers_path, :method => 'get' do %>
         <p>
           <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
           <%= submit_tag "Search",class:'btn_small_blue', :name => nil %>
         </p>
     <% end %>
-
-  </div>
+  </div> -->
           <div class="action_button">
         <%= button_to 'New traveller', new_traveller_path, method: 'get', class:'btn_medium_blue' %>
                 </div>
@@ -31,6 +30,24 @@
         <th width="10%">Action</th>
       </tr>
     </thead>
+    <thead>
+    <%= form_tag travellers_path, :method =>'get' do %>
+      <tr cellpadding="0">
+        <td  width="1%"></td>
+        <td width="13%"><%= text_field_tag'fillter[name]', params[:fillter] == nil ? nil: params[:fillter][:name],style:'width:100%'%></td>
+        <td width="5%"><%= select_tag'fillter[gender]',options_for_select([ "All", "Male","Female" ],params[:fillter] ==  nil ? "All": params[:fillter][:gender]),style:'width:100%'%></td>
+        <td width="20%"><%= text_field_tag'fillter[address]',params[:fillter] == nil ? nil : params[:fillter][:address],style:'width:100%'%></td>
+        <td width="10%"><%= text_field_tag'fillter[phone]',params[:fillter] == nil ? nil : params[:fillter][:phone],style:'width:100%'%></td>
+        <td width="15%"><%= text_field_tag'fillter[device_name]',params[:fillter] == nil ? nil : params[:fillter][:device_name],style:'width:100%'%></td>
+         <td width="10%"><%= select_tag "fillter[company]", options_from_collection_for_select(@company, "id", "name",params[:fillter] == nil ? nil : params[:fillter][:company]), include_blank:"All",style:'width:100%'%></td>
+         <td width="3%"><%= select_tag'fillter[active]',options_for_select([ "All", "True","False" ],params[:fillter] ==  nil ? "All": params[:fillter][:active]),style:'width:100%'%></td>
+        <td width="10 %">
+          <%= image_submit_tag('search_button_green.ico',width:"25px",height:"25px",style:"margin-bottom:-10px")%>
+          <%= link_to image_tag('undo.ico',size:'20x20')%>
+        </td>
+      </tr>
+    <% end -%>
+   </thead>
       <% if @travellers.count == 0 %>
         <tr><td colspan="7" style="text-align:center">No Data</td></tr>
       <% else %>
@@ -42,8 +59,8 @@
               <td><%= traveller.gender == false ? "Male" : "Female"%></td>
               <td><%= truncate(traveller.address,length:30) %></td>
               <td><%= traveller.phone%></td>
-              <td><%= traveller.device_id==0 ? "null" : traveller.device_id %></td>
-              <td><%= traveller.company == nil ? "Null" : truncate(traveller.company.name,length:15) %></td>
+              <td><%= traveller.device_id ==  0 ? "No device" : truncate(Device.find(traveller.device_id).name, length:30) %></td>
+              <td><%= traveller.company == nil ? "No Company" : truncate(traveller.company.name,length:15) %></td>
               <td><%= traveller.active == 1 ? "true" : "false"%></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,traveller %>
               <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_traveller_path(traveller) %>

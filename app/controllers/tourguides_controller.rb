@@ -4,15 +4,17 @@ class TourguidesController < ApplicationController
   # GET /tourguides
   # GET /tourguides.json
   def index
+    @company = Company.all
     if session[:group] == "admin"
-      if params[:search]
-        @tourguides = Tourguide.search(params[:search].strip).order("created_at DESC").page(params[:page])
+      if params[:fillter]
+        @tourguides = Tourguide.search(params[:fillter]).order("created_at DESC").page(params[:page])
       else
         @tourguides = Tourguide.order(:name).page(params[:page])
       end
     else
-      if params[:search]
-        @tourguides = Tourguide.search(params[:search].strip,session[:company_id]).order("created_at DESC").page(params[:page])
+       @company = Company.where(id:session[:company_id])
+      if params[:fillter]
+        @tourguides = Tourguide.search(params[:fillter],session[:company_id]).order("created_at DESC").page(params[:page])
       else
         @tourguides = Tourguide.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end

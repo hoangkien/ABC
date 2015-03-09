@@ -2,12 +2,12 @@
 <% @feedbacks.each do |feedback| %>
     <tr>
       <td><%= @stt%></td>
-      <td><%= Traveller.find(feedback.traveller_id).name %></td>
-      <td><%= Tour.find(feedback.tour_id).name%></td>
+      <td><%= feedback.name %></td>
+      <td><%= feedback.phone%></td>
+      <td><%= feedback.tour_name%></td>
       <td><%= Company.find(feedback.company_id).name%></td>
       <td><%= feedback.quantiy_service %></td>
       <td><%= truncate(strip_tags(feedback.comment),length: 80)%></td>
-      <td><%= feedback.created_at.strftime("%d/%m/%Y") if not feedback.created_at == nil %></td>
       <td style="text-align:center"><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:"View") ,feedback %>
     </tr>
     <% @stt +=1 %>

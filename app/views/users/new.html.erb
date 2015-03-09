@@ -1,16 +1,3 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#center .new_form #Sign_Up").click(function(){
-      if($("#center .new_form #user_group").val()=='company'){
-        var company_name =$("#center .new_form #user_company_name").val();
-        if(company_name.trim()==0){
-          $("#center .new_form #error_comp").html("Can't Blank");
-          return false;
-        }
-      }
-    });
-  });
-</script>
 <div> Create a new Account </div>
 <%= form_for(@user) do |f| %>
 

@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get "api/devices" => "api/devices#show"
   post "api/devices/create" =>"api/devices#create"
   get "api/users/list" => "api/users#list"
+  post "api/users/push" => "api/users#push"
   post "api/users/update_position" => "api/users#update_position"
   post "api/users/feedback" => "api/users#feedback"
   namespace :api do

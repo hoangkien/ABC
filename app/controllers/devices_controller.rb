@@ -5,19 +5,20 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-     
+    @company = Company.all
+    @created_at = ["All","Day ago","Weeks ago","A month ago","Six month ago","Years ago"]
     if session[:group] == "admin"
-      if params[:search]
-        @devices = Device.search(params[:search].strip).order("created_at DESC").page(params[:page])
+      if params[:fillter]
+        @devices = Device.search(params[:fillter]).order("created_at DESC").page(params[:page])
       else
         @devices = Device.order(:name).page(params[:page])
       end
     else
-      company_id = User.where(account:session[:account]).first.company_id
-      if params[:search]
-          @devices = Device.search(params[:search].strip,company_id).order("created_at DESC").page(params[:page])
+      @company = Company.where(id:session[:company_id])
+      if params[:fillter]
+          @devices = Device.search(params[:fillter],session[:company_id]).order("created_at DESC").page(params[:page])
       else
-        @devices = Device.where(company_id:company_id).order(:name).page(params[:page])
+        @devices = Device.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end 
     end
   end

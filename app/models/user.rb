@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates :account, :password, :password_confirmation, :name,:address, presence: true, on: :create
   validates :account, :name, :address, presence: true, on: :update
   validates :account, uniqueness: true, length: { minimum: 6 }, on: :create
-  validates :password , confirmation:true, on: :create
+  validates :password , confirmation:true, length:{minimum:6}, on: :create
   validates :account,:password, format: { with: /\A[a-zA-Z0-9]+\z/, message: " is invalid"} ,on: :create
   def self.search(query)
     result="1=1 "
@@ -23,17 +23,29 @@ class User < ActiveRecord::Base
     unless query[:address].blank?
       result += " and address like '%#{query[:address]}%' "
     end
-    if query[:group] != "group"
+    if query[:group] != "All"
       result += " and users.group ='#{query[:group]}' "
     end
     unless query[:company].blank?
       result += " and company_id = #{query[:company]} "
     end
-    unless query[:created_at].blank?
-      date = DateTime.strptime(query[:created_at],"%m/%d/%Y")
-      result += "and created_at < '#{date}'"
-      
+    if query[:created_at] == "Day ago"
+      date = Time.at(1.day.ago.to_i)
+      result += " and created_at > '#{date}'"
+    elsif query[:created_at] == "Weeks ago"
+      date = Time.at(1.week.ago.to_i)
+      result += " and created_at > '#{date}'"
+    elsif query[:created_at] == "A month ago"
+      date = Time.at(1.month.ago.to_i)
+      result += " and created_at > '#{date}'"
+    elsif query[:created_at] == "Six month ago"
+      date = Time.at(6.months.ago.to_i)
+      result += " and created_at > '#{date}'"
+    elsif query[:created_at] == "Years ago"
+      date = Time.at(1.year.ago.to_i)
+      result += " and created_at > '#{date}'"
     end
+
     # abort(query[:name])
     # query.each do | fillter|
     #  raise RuntimeError, "#{fillter.account}; Message goes here"

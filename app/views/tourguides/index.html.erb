@@ -1,6 +1,6 @@
 
 <div class="top_in_center">
-  <div class="search_form">
+<!--   <div class="search_form">
     <%= form_tag tourguides_path, :method => 'get' do %>
         <p>
           <%= text_field_tag :search, params[:search], :placeholder => "type search key" %>
@@ -8,7 +8,7 @@
         </p>
     <% end %>
 
-  </div>
+  </div> -->
   <div class="action_button">
     <%= button_to 'New tourguide', new_tourguide_path, method: 'get', class:'btn_medium_blue' %>
   </div>
@@ -22,7 +22,7 @@
     <thead>
       <tr>
         <th width="1%">ID </th>
-        <th width="13%">Name </th>
+        <th width="15%">Name </th>
         <!-- <th width="5%">Gender</th> -->
         <th width="20%">Address</th>
         <th width="10%">Phone</th>
@@ -32,6 +32,24 @@
         <th width="10%">Action</th>
       </tr>
     </thead>
+    <thead>
+    <%= form_tag tourguides_path, :method =>'get' do %>
+      <tr cellpadding="0">
+        <td  width="1%"></td>
+        <td width="15%"><%= text_field_tag'fillter[name]', params[:fillter] == nil ? nil: params[:fillter][:name],style:'width:100%'%></td>
+<!--         <td width="5%"><%= select_tag'fillter[gender]',options_for_select([ "All", "Male","Female" ],params[:fillter] ==  nil ? "All": params[:fillter][:gender]),style:'width:100%'%></td> -->
+        <td width="20%"><%= text_field_tag'fillter[address]',params[:fillter] == nil ? nil : params[:fillter][:address],style:'width:100%'%></td>
+        <td width="10%"><%= text_field_tag'fillter[phone]',params[:fillter] == nil ? nil : params[:fillter][:phone],style:'width:100%'%></td>
+        <td width="15%"><%= text_field_tag'fillter[device_name]',params[:fillter] == nil ? nil : params[:fillter][:device_name],style:'width:100%'%></td>
+         <td width="15%"><%= select_tag "fillter[company]", options_from_collection_for_select(@company, "id", "name",params[:fillter] == nil ? nil : params[:fillter][:company]), include_blank:"All",style:'width:100%'%></td>
+         <td width="3%"><%= select_tag'fillter[active]',options_for_select([ "All", "True","False" ],params[:fillter] ==  nil ? "All": params[:fillter][:active]),style:'width:100%'%></td>
+        <td width="10 %">
+          <%= image_submit_tag('search_button_green.ico',width:"25px",height:"25px",style:"margin-bottom:-10px")%>
+          <%= link_to image_tag('undo.ico',size:'20x20')%>
+        </td>
+      </tr>
+    <% end -%>
+   </thead>
     <tbody>
       <% if @tourguides.count == 0%>
         <tr>
@@ -45,7 +63,7 @@
               <!-- <td><%= tourguide.gender == 1 ? "Female" : "Male" %></td> -->
               <td><%= tourguide.address %></td>
               <td><%= tourguide.phone%></td>
-              <td><%= tourguide.device_id == 0 ? "null": truncate(tourguide.device_id.to_s, length:20) %></td>
+              <td><%= tourguide.device_id ==  0 ? "Null" : truncate(Device.find(tourguide.device_id).name, length:20) %></td>
               <td><%= tourguide.company == nil ? "Null" : truncate(tourguide.company.name,length:20) %></td>
               <td><%= tourguide.active%></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:"View") ,tourguide %>

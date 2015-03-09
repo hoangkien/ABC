@@ -4,15 +4,17 @@ class TravellersController < ApplicationController
   # GET /travellers
   # GET /travellers.json
   def index
+    @company = Company.all
     if session[:group] == "admin"
-      if params[:search]
-        @travellers = Traveller.search(params[:search].strip).order("created_at DESC").page(params[:page])
+      if params[:fillter]
+        @travellers = Traveller.search(params[:fillter]).order("created_at DESC").page(params[:page])
       else
         @travellers = Traveller.order(:name).page(params[:page])
       end
     else
-      if params[:search]
-        @travellers = Traveller.search(params[:search].strip,session[:company_id]).order("created_at DESC").page(params[:page])
+      @company = Company.where(id:session[:company_id])
+      if params[:fillter]
+        @travellers = Traveller.search(params[:fillter],session[:company_id]).order("created_at DESC").page(params[:page])
       else
         @travellers = Traveller.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end 
@@ -54,6 +56,7 @@ class TravellersController < ApplicationController
   # POST /travellers
   # POST /travellers.json
   def create
+    # abort(traveller_params[:device_id])
     if session[:group] == "company"
       #select device of company where status = 0
       @devices = Device.where(status:0,company_id:session[:company_id])
@@ -62,10 +65,14 @@ class TravellersController < ApplicationController
       @devices = Device.where(status:0)
     end
     @traveller_params = traveller_params
+    if @traveller_params[:device_id].blank?
+      @traveller_params[:device_id] = 0
+    end
     if session[:company_id]
       @traveller_params[:company_id] = session[:company_id]
     end
     @traveller = Traveller.new(@traveller_params)
+    #upload anh
     if @traveller_params['images']
       @traveller['images'] = @traveller_params['images'].original_filename
       upload = Traveller.upload(@traveller_params)

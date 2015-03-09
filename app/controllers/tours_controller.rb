@@ -120,7 +120,7 @@ class ToursController < ApplicationController
     @traveller = Traveller.find(params[:traveller_id])
     unless @traveller.device_id == 0
       @device = Device.find(@traveller.device_id)
-      @device.update(status:0,lat:nil,lng:nil)
+      @device.update(status:0,lat:'21.03005',lng:'105.785025')
     end
     #delete traveller in tour
     @traveller.tours.delete(@tour)
@@ -134,7 +134,7 @@ class ToursController < ApplicationController
     @tourguide = Tourguide.find(params[:tourguide_id])
     unless @tourguide.device_id == 0
       @device = Device.find(@tourguide.device_id)
-      @device.update(status:0,lat:nil,lng:nil)
+      @device.update(status:0,lat:'21.03005',lng:'105.785025')
     end
     #delete tourguide in tour
     @tourguide.tours.delete(@tour)
@@ -153,7 +153,7 @@ class ToursController < ApplicationController
       end
       
       device = Device.find(params[:device_id])
-      device.update(status:0,lat:nil,lng:nil)
+      device.update(status:0,lat:'21.03005',lng:'105.785025')
       redirect_to list_user_path(params[:tour_id])
   end
   def change_device

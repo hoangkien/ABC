@@ -7,13 +7,13 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @company = Company.all
-    @created_at = ["a week ago","a month ago","six month ago","years ago"]
+    @created_at = ["All","Day ago","Weeks ago","A month ago","Six month ago","Years ago"]
     # @users = User.all
     # @users = User.order(:name).page(params[:page])
     if params[:fillter]
-      @users = User.search(params[:fillter]).order("created_at DESC").page(params[:page])
+      @users = User.search(params[:fillter]).order("account DESC").page(params[:page])
     else
-       @users = User.order(:account).page(params[:page]).order("created_at DESC").page(params[:page])
+       @users = User.order(:account).page(params[:page]).order("account DESC").page(params[:page])
     end
   end
   # GET /users/1

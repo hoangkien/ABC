@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<th><strong>Device:</strong></th>
-		<td><%= @traveller.device_id == (nil or 0) ? "No Device" : @traveller.device_id %></td>
+		<td><%= @traveller.device_id == (nil or 0) ? "No Device" : Device.find(@traveller.device_id).name %></td>
 	</tr>
 	<tr>
 		<th><strong>Company:</strong></th>
