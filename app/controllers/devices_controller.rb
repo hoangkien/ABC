@@ -80,7 +80,13 @@ class DevicesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
-      @device = Device.find(params[:id])
+      begin
+        @device = Device.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to devices_path,:notice => "Invalid Device"
+      else
+        @device = Device.find(params[:id])
+      end
     end
     def check_company
       if session[:group] == "company"

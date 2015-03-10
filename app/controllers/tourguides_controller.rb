@@ -47,6 +47,9 @@ class TourguidesController < ApplicationController
     if session[:company_id]
       @tourguide_params[:company_id] = session[:company_id]
     end
+    if @tourguide_params[:device_id].blank?
+      @tourguide_params[:device_id] = 0
+    end
     @tourguide = Tourguide.new(@tourguide_params)
     if @tourguide_params['images']
       @tourguide['images'] = @tourguide_params['images'].original_filename
@@ -90,7 +93,13 @@ class TourguidesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tourguide
-      @tourguide = Tourguide.find(params[:id])
+      begin
+        @tourguide = Tourguide.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to tourguides_path, :notice =>"Invalid Tourguide"
+      else
+        @tourguide = Tourguide.find(params[:id])
+      end
     end
     def check_company
       if session[:group] == "company"

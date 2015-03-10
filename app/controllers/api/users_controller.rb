@@ -158,7 +158,11 @@ class Api::UsersController < ApplicationController
 						options = {data: {message:message}, collapse_key: "updated_score"}
 						#send GCM
 						response = gcm.send(@registration_ids,options)
-						render json:{response:response}
+						if response[:response] == "success"
+							render json:{status:0, message:"success"}
+						else
+							render json:{status:108, message:"Can not send message"}
+						end
 			 	else#traveller
 			 			@tour = @traveller.tours.last
 			 			@tourguide_list = @tour.tourguides

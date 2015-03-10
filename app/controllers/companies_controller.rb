@@ -79,7 +79,13 @@ class CompaniesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company
-      @company = Company.find(params[:id])
+      begin
+        @company = Company.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to companies_path, :notice =>"Invalid Company"
+      else
+        @company = Company.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -90,7 +90,13 @@ class FeedbacksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feedback
-      @feedback = Feedback.find(params[:id])
+      begin
+        @feedback = Feedback.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to feedbacks_path, :notice => "Invalid Feedback"
+      else
+        @feedback = Feedback.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
