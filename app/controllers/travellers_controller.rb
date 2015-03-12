@@ -84,9 +84,11 @@ class TravellersController < ApplicationController
         traveller = Traveller.last
         #add traveller in tour
         traveller.tours << tour
-        device = Device.find(traveller_params[:device_id])
-        #change status device =>true
-        device.update(status:1)
+        unless traveller_params[:device_id].blank?
+          device = Device.find(traveller_params[:device_id])
+          #change status device =>true
+          device.update(status:1)
+        end
         #redirect_to tours > list_user
         format.html{redirect_to list_user_path(params[:tour_id]), notice: 'Traveller was successfully created.'}
       elsif @traveller.save
