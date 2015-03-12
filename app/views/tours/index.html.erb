@@ -43,7 +43,7 @@
               <td><%= tour.number_of_member %> Person</td>
               <td><%= truncate(strip_tags(tour.information),length: 80)%></td>
               <td><%= link_to"List Users",list_user_path(tour), method: :get%></td>
-              <td><%= truncate(tour.company.name,length:25)%></td>
+              <td><%= truncate(tour.company.name,length:25) if tour.company_id%></td>
               <td><%= tour.created_at.strftime("%d/%m/%Y") if not tour.created_at == nil %></td>
               <!-- <td><%= tour.updated_at.strftime("%d/%m/%Y") if not tour.updated_at == nil %></td> -->
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,tour,method: :get %>
