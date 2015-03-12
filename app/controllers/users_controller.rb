@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def search
     @users = User.order(:name).page(params[:page])
-      render 'index'
+    render 'index'
   end
   def show
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302014912) do
+ActiveRecord::Schema.define(version: 20150311023621) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -46,10 +46,10 @@ ActiveRecord::Schema.define(version: 20150302014912) do
   create_table "devices", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.boolean  "status",     limit: 1,   default: false
-    t.string   "lat",        limit: 255
-    t.string   "lng",        limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.string   "lat",        limit: 255, default: "21.03005"
+    t.string   "lng",        limit: 255, default: "105.785025"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "code",       limit: 255
     t.integer  "company_id", limit: 4
     t.string   "reg_id",     limit: 255
@@ -58,11 +58,12 @@ ActiveRecord::Schema.define(version: 20150302014912) do
   create_table "feedbacks", force: :cascade do |t|
     t.string   "quantiy_service", limit: 255
     t.string   "comment",         limit: 255
-    t.integer  "traveller_id",    limit: 4
+    t.string   "name",            limit: 50
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "tour_id",         limit: 4
+    t.string   "tour_name",       limit: 255
     t.integer  "company_id",      limit: 4
+    t.string   "phone",           limit: 45
   end
 
   create_table "gcm_registrations", force: :cascade do |t|

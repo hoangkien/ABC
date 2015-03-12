@@ -21,12 +21,6 @@ $(document).ready(function() {
      // alert(url[1]);
       $("#menu_nav ul li."+url[1]+" a").addClass('active');
     //
-    //changeGroup();
-    //if($("#center .new_form #user_group").val() =='company'){
-    //    $("#center .new_form #user_company_id").css("display","");
-    //}else{
-    //    $("#center .new_form #user_company_id").css("display","none");
-    //}
     if($("#center .new_form #user_group").val()=='admin'){
         $("#center .new_form .company").css("display","none");
     }
@@ -35,24 +29,6 @@ $(document).ready(function() {
     $('#list1').DataTable();
     //datepicker
     $( "#fillter_created_at" ).datepicker();
-    // jQuery('#fillter_created_at').datetimepicker({
-     //  lang:'vi',
-     //  i18n:{
-     //    fn:{
-     //     months:[
-     //      'Januar','Februar','März','April',
-     //      'Mai','Juni','Juli','August',
-     //      'September','Oktober','November','Dezember'
-     //     ],
-     //     dayOfWeek:[
-     //      "So.", "Mo", "Di", "Mi", 
-     //      "Do", "Fr", "Sa."
-     //     ]
-     //    }
-     //  },
-     //  timepicker:false,
-     //  format:'d/m/Y'
-     // });
     function changeGroup(){
         console.log(2);
         console.log($("#center .new_form #user_group").val());
