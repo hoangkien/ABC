@@ -61,7 +61,7 @@
               <td><%= traveller.phone%></td>
               <td><%= (traveller.device_id ==nil or traveller.device_id==0) ?  "No device": truncate(Device.find(traveller.device_id).name, length:30) %></td>
               <td><%= traveller.company == nil ? "No Company" : truncate(traveller.company.name,length:15) %></td>
-              <td><%= traveller.active == 1 ? "true" : "false"%></td>
+              <td><%= (traveller.active == 0 or traveller.active == nil) ? "False" : "True"%></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,traveller %>
               <%= link_to image_tag('templates/edit.png',title:'Edit') ,edit_traveller_path(traveller) %>
               <%= link_to image_tag('templates/Delete.png',title:'Delete'), traveller, method: :delete, data: { confirm: 'Are you sure?' } %></td>
