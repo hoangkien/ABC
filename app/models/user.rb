@@ -63,5 +63,4 @@ class User < ActiveRecord::Base
   def self.login(account, pass)
     where("account like ? and password like ?","#{account}","#{pass}").first
   end
-
 end

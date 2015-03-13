@@ -34,7 +34,7 @@
 							# @tourguide_info = @tourguide
 							# @tourguide_info[:abc] = @device.lat
 							# @tourguide[:lng] = @device.lng
-							unless  @tourguide == nil #tourguide
+							if  @tourguide #tourguide
 								#render tourguide info
 									render json:{ 
 													status:0,message: "Success",details:{

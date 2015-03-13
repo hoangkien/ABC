@@ -24,11 +24,11 @@
   </tr>
   <tr>
     <th><strong>Device:</strong></th>
-    <td><%= @tourguide.device_id == (nil or 0) ? "No Device" : @tourguide.device_id %></td>
+    <td><%= (@tourguide.device_id == nil or @tourguide.device_id == 0) ? "No Device" : Device.find(@tourguide.device_id).name %></td>
   </tr>
   <tr>
     <th><strong>Active:</strong></th>
-    <td><%= @tourguide.active %></td>
+    <td><%= @tourguide.active  == 0 ? "False" : "True" %></td>
   </tr>
   <tr>
     <th><strong>Company:</strong></th>

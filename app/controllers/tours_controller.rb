@@ -139,7 +139,7 @@ class ToursController < ApplicationController
     #delete tourguide in tour
     @tourguide.tours.delete(@tour)
     #update device_id and active of tourguide 
-    @tourguide.update(active:0,device_id:0)
+    @tourguide.update(active:nil,device_id:0)
     #update status device
     redirect_to list_user_path(params[:tour_id]), alert:"Tourguide was successfully destroyed"
   end

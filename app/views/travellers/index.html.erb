@@ -59,7 +59,7 @@
               <td><%= traveller.gender == false ? "Male" : "Female"%></td>
               <td><%= truncate(traveller.address,length:30) %></td>
               <td><%= traveller.phone%></td>
-              <td><%= traveller.device_id ==  0 ? "No device" : truncate(Device.find(traveller.device_id).name, length:30) %></td>
+              <td><%= (traveller.device_id ==nil or traveller.device_id==0) ?  "No device": truncate(Device.find(traveller.device_id).name, length:30) %></td>
               <td><%= traveller.company == nil ? "No Company" : truncate(traveller.company.name,length:15) %></td>
               <td><%= traveller.active == 1 ? "true" : "false"%></td>
               <td><%= link_to image_tag('templates/view_icon.ico',size:"16x16",title:'View') ,traveller %>
