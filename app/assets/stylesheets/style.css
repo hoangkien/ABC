@@ -182,3 +182,12 @@ textarea{
 .dataTables_length ,.dataTables_filter,.dataTables_info,.paging_simple_numbers{
 	display: none;
 }
+.not_found{
+	text-align: center;
+	background: #F4F4F4;
+	padding: 14px 0px 28px 0px;
+}
+.not_found p{
+	font-size: 16px;
+	font-weight: bold;
+}

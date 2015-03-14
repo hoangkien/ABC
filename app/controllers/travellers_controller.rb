@@ -130,7 +130,7 @@ class TravellersController < ApplicationController
       begin
          @traveller = Traveller.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        redirect_to travellers_path,:notice =>"Invalid FeedBack"        
+        render "layouts/not_found.html.erb"   
       else
         @traveller = Traveller.find(params[:id])
       end

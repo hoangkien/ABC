@@ -96,7 +96,7 @@ class TourguidesController < ApplicationController
       begin
         @tourguide = Tourguide.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        redirect_to tourguides_path, :notice =>"Invalid Tourguide"
+        render "layouts/not_found.html.erb"
       else
         @tourguide = Tourguide.find(params[:id])
       end

@@ -83,7 +83,7 @@ class DevicesController < ApplicationController
       begin
         @device = Device.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        redirect_to devices_path,:notice => "Invalid Device"
+        render "layouts/not_found.html.erb"
       else
         @device = Device.find(params[:id])
       end

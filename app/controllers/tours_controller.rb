@@ -1,5 +1,5 @@
 class ToursController < ApplicationController
-  before_action :set_tour, only: [:show, :edit, :update, :destroy,:list_user]
+  before_action :set_tour, only: [:show, :edit, :update, :destroy,:list_users]
   before_action :check_company, only:[:show,:edit]
   skip_before_action :set_tour , only: [:add_tourguide,:remove_tourguide]
   # GET /tours
@@ -84,7 +84,7 @@ class ToursController < ApplicationController
   end
   def list_users
 
-      @tour = Tour.find(params[:id])
+      #   @tour = Tour.find(params[:id])
 
       @traveller_list = @tour.travellers
 
@@ -174,7 +174,14 @@ class ToursController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tour
-      @tour = Tour.find(params[:id])
+      begin
+        @tour = Tour.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render "layouts/not_found.html.erb"
+        # redirect_to tourguides_path, :notice =>"Invalid Tourguide"
+      else
+        @tour = Tour.find(params[:id])
+      end
     end
     def check_company
       if session[:group] == "company"

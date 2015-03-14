@@ -93,7 +93,7 @@ class FeedbacksController < ApplicationController
       begin
         @feedback = Feedback.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        redirect_to feedbacks_path, :notice => "Invalid Feedback"
+       render "layouts/not_found.html.erb"
       else
         @feedback = Feedback.find(params[:id])
       end

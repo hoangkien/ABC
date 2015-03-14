@@ -140,7 +140,7 @@ class UsersController < ApplicationController
       begin
           @user = User.find(params[:id])  
       rescue ActiveRecord::RecordNotFound
-          redirect_to users_path,:notice =>"Invalid user"
+         render "layouts/not_found.html.erb"
       else
           @user = User.find(params[:id]) 
       end
