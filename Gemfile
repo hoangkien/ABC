@@ -43,6 +43,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'paperclip'
 gem 'responders'
 gem 'gcm'
+gem 'gcm_on_rails'
 gem 'filterrific'
 
 # Use Unicorn as the app server
