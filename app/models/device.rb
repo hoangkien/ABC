@@ -1,4 +1,5 @@
 class Device < ActiveRecord::Base
+  require 'active_support/core_ext/array/conversions.rb'
   belongs_to :tourguide
   belongs_to :traveller
   belongs_to :company

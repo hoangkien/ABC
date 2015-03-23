@@ -90,9 +90,9 @@ class ToursController < ApplicationController
 
       @tourguide_list = @tour.tourguides
       if session[:group] == "admin"
-        @tourguides = Tourguide.where("active = 0")
-        @travellers = Traveller.where("active =0 ")
-        @devices = Device.where("status = 0")
+        @tourguides = Tourguide.where("active = 0 or active is NULL"  )
+        @travellers = Traveller.where("active = 0 or active is NULL")
+        @devices = Device.where("status = 0 or status is NULL")
       else
         @tourguides = Tourguide.where("active = 0 and company_id=#{session[:company_id]}")
         @travellers = Traveller.where("active = 0 and company_id =#{session[:company_id]}")

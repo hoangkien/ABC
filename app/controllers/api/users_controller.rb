@@ -7,15 +7,15 @@ class Api::UsersController < ApplicationController
 		#get tour info
 		#get list users
 		 unless params[:device_code].blank?
-			@check_exits = Device.where(code: params[:device_code]).first
+			@check_exits = Device.find_by(code: params[:device_code])
 			if @check_exits
 				if @check_exits.status == false
 					render json:{status:0, message:"Device not used",traveller_in_tour:[]}
 				else
 					#get tourguide info using device
-					@tourguide = Tourguide.where(device_id: @check_exits.id ).first
+					@tourguide = Tourguide.find_by(device_id: @check_exits.id )
 					#get traveller info using device
-					@traveller = Traveller.where(device_id:@check_exits.id).first
+					@traveller = Traveller.find_by(device_id:@check_exits.id)
 					if @tourguide#tourguide
 							#get tour info
 							@tour = @tourguide.tours.last
@@ -69,7 +69,7 @@ class Api::UsersController < ApplicationController
 	end
 	def update_position
 		unless params[:device_code].blank?
-			@device = Device.where(code:params[:device_code]).first
+			@device = Device.find_by(code:params[:device_code])
 			if @device
 				# render json:{device:@device}
 				# render json:{post:post_params}
@@ -95,7 +95,7 @@ class Api::UsersController < ApplicationController
 	def feedback
 		# render json:{status:0,message:params_feedback[:rating_bar]}
 		unless params[:device_code].blank?
-			@device = Device.where(code:params[:device_code]).first
+			@device = Device.find_by(code:params[:device_code])
 			# @traveller = Traveller.where(device_id:@device.id).first
 			# @tour = @traveller.tours.first
 			@company = @device.company
@@ -128,14 +128,14 @@ class Api::UsersController < ApplicationController
 				render json:{ status:102 , message:"Not found information Device or message"}
 		else
 			# device
-			@device = Device.where(code:params[:device_code]).first
+			@device = Device.find_by(code:params[:device_code])
 			if @device.nil? or @device.status == 0
 			 	render json:{status: 101, message:"Device code invalid or Device not used "}
 			else
 				# render json:{device:@device}
 			# # # # #get Tourguide info
-			 	@tourguide = Tourguide.where(device_id:@device.id).first
-			 	@traveller = Traveller.where(device_id:@device.id).first
+			 	@tourguide = Tourguide.find_by(device_id:@device.id)
+			 	@traveller = Traveller.find_by(device_id:@device.id)
 			 	# render  json:{tourguide:@tourguide}
 				if @tourguide
 			 		# render json:{status:102, message:"Device not used"}

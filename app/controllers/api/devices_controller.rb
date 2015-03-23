@@ -7,7 +7,7 @@
 			#check params device_code
 			unless params[:device_code].blank? or params[:regId_code].blank?
 				#check device exits
-				@device = Device.where(code: params[:device_code]).first
+				@device = Device.find_by(code: params[:device_code])
 				#neu co
 				if @device
 					if @device.status == false
@@ -30,7 +30,7 @@
 							#check status
 							# if don't joined tour
 							#joined tour
-							@tourguide = Tourguide.where(device_id:@device.id).first
+							@tourguide = Tourguide.find_by(device_id:@device.id)
 							# @tourguide_info = @tourguide
 							# @tourguide_info[:abc] = @device.lat
 							# @tourguide[:lng] = @device.lng
@@ -54,7 +54,7 @@
 							else#traveller
 								# render json:{url:request.host_with_port}
 								#get traveller info
-								@traveller = Traveller.where(device_id:@device.id).first
+								@traveller = Traveller.find_by(device_id:@device.id)
 								#render traveller info
 								render json:{ 
 												status:0,message: "Success",details:{
@@ -76,7 +76,7 @@
 							render json:{ status: 103, message:"RegId invalid "}
 						else
 							#joined tour
-							@tourguide = Tourguide.where(device_id:@device.id).first
+							@tourguide = Tourguide.find_by(device_id:@device.id)
 							# @tourguide_info = @tourguide
 							# @tourguide_info[:abc] = @device.lat
 							# @tourguide[:lng] = @device.lng
@@ -100,7 +100,7 @@
 							else#traveller
 								# render json:{url:request.host_with_port}
 								#get traveller info
-								@traveller = Traveller.where(device_id:@device.id).first
+								@traveller = Traveller.find_by(device_id:@device.id)
 								#render traveller info
 								render json:{ 
 												status:0,message: "Success",details:{
@@ -144,12 +144,12 @@
 		def create
 			unless params[:company_code].blank? or params[:device_code].blank? 
 				#check company code
-				@check_company = Company.where(code: params[:company_code]).first
+				@check_company = Company.find_by(code: params[:company_code])
 				if @check_company
 					unless params[:device_code] == ""
-						@check_code = Device.where(code:params[:device_code]).first
+						@check_code = Device.find_by(code:params[:device_code])
 						if @check_code
-							render json:{status: 5, message:"device code already exist"}
+							render json:{status: 5, message:"Device code already exist"}
 						else
 							@device = Device.new(name:params[:device_code],code:params[:device_code],company_id:@check_company.id,status:0)
 							@device.save
@@ -159,7 +159,7 @@
 						render json:{status:1,message:"Missing device code"}
 					end
 				else
-					render json:{status: 4,message:"Company code don't exist"}
+					render json:{status: 4,message:"Company code invalid"}
 				end
 			else
 				 render json:{status:3, message:"Not found information Device or Company.	"}
