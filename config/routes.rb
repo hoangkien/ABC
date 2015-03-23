@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
+  root 'session#new'
   get 'session/new'
   get 'tours/disconnect_device' => "tours#disconnect_device"
   get 'tours/change_device' => "tours#change_device"
