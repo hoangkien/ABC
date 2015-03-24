@@ -32,7 +32,7 @@ class Api::UsersController < ApplicationController
 											                address: travel.address,
 											                gender: travel.gender == false ? "male" : "female", 
 											                email: travel.email,
-											                images:"http://"+request.host_with_port+"/assets/images_travellers/"+travel.images
+											                images:travel.images ? "http://"+request.host_with_port+"/assets/images_travellers/"+travel.images : "http://"+request.host_with_port+"/assets/images_travellers/no_image.png" ,
 										            }
 										        end
 							#render mobile list travellers
@@ -53,7 +53,7 @@ class Api::UsersController < ApplicationController
 										                address: tourguide.address,
 										                gender: tourguide.gender == false ? "male" : "female", 
 										                email: tourguide.email,
-										                images:"http://"+request.host_with_port+"/assets/images_tourguide/"+tourguide.images
+										                images: tourguide.images ? "http://"+request.host_with_port+"/assets/images_tourguide/"+tourguide.images : "http://"+request.host_with_port+"/assets/images_tourguide/no_image.png",
 								            }
 										end
 						#render mobile  list tourguides
