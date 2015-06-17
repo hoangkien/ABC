@@ -14,7 +14,7 @@ development:
     adapter: mysql2
     database: db_tourism_app2
     pool: 5
-    user: root
+    username: root
     password: 1
     socket: /var/run/mysqld/mysqld.sock
     reconnect: false

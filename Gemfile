@@ -38,7 +38,7 @@ gem 'kaminari'
 #gem 'rails-api'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem'bcrypt-ruby','~>3.1.2'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'paperclip'
 gem 'responders'
@@ -58,15 +58,16 @@ group :production do
 end
 group :development do
   gem 'sqlite3'
+  gem 'pry-rails', '~> 0.3.4'
 end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring','~> 1.3.1'
+  gem 'spring'
 end
 

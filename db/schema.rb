@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311023621) do
+ActiveRecord::Schema.define(version: 20150311022028) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -45,11 +45,11 @@ ActiveRecord::Schema.define(version: 20150311023621) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.boolean  "status",     limit: 1,   default: false
-    t.string   "lat",        limit: 255, default: "21.03005"
-    t.string   "lng",        limit: 255, default: "105.785025"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.boolean  "status",     limit: 1
+    t.string   "lat",        limit: 255
+    t.string   "lng",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "code",       limit: 255
     t.integer  "company_id", limit: 4
     t.string   "reg_id",     limit: 255
@@ -58,12 +58,11 @@ ActiveRecord::Schema.define(version: 20150311023621) do
   create_table "feedbacks", force: :cascade do |t|
     t.string   "quantiy_service", limit: 255
     t.string   "comment",         limit: 255
-    t.string   "name",            limit: 50
+    t.integer  "traveller_id",    limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "tour_name",       limit: 255
+    t.integer  "tour_id",         limit: 4
     t.integer  "company_id",      limit: 4
-    t.string   "phone",           limit: 45
   end
 
   create_table "gcm_registrations", force: :cascade do |t|
@@ -75,12 +74,10 @@ ActiveRecord::Schema.define(version: 20150311023621) do
     t.string   "name",       limit: 255
     t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
-    t.integer  "device_id",  limit: 4,     default: 0
-    t.boolean  "active",     limit: 1,     default: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "gender",     limit: 1,     default: 0
-    t.string   "email",      limit: 255
+    t.integer  "device_id",  limit: 4
+    t.boolean  "active",     limit: 1
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "company_id", limit: 4
     t.string   "images",     limit: 255
   end
@@ -112,27 +109,25 @@ ActiveRecord::Schema.define(version: 20150311023621) do
     t.string   "name",       limit: 255
     t.text     "address",    limit: 65535
     t.string   "phone",      limit: 255
-    t.integer  "device_id",  limit: 4,     default: 0
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.boolean  "gender",     limit: 1,     default: false
-    t.string   "email",      limit: 255
+    t.integer  "device_id",  limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "company_id", limit: 4
-    t.integer  "active",     limit: 4,     default: 0
+    t.integer  "active",     limit: 4
     t.string   "images",     limit: 255
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "account",    limit: 255
-    t.string   "password",   limit: 255
-    t.string   "name",       limit: 255
-    t.text     "address",    limit: 65535
-    t.string   "group",      limit: 255
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "company_id", limit: 4
-    t.string   "email",      limit: 255
-    t.integer  "gender",     limit: 1,     default: 0
+    t.string   "account",         limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "name",            limit: 255
+    t.text     "address",         limit: 65535
+    t.string   "group",           limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "company_id",      limit: 4
+    t.string   "email",           limit: 255
+    t.integer  "gender",          limit: 4
   end
 
 end

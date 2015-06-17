@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       if user_params["group"] == 'company'#  group is company
         if company_params[:name].present? == true # company name is valid
           check_company = Company.where(name:company_params[:name]).first
-          if check_company.nil? 
+          if check_company.nil?
             @params_company[:code] = Company.generate_company_code
             @company = Company.new( @params_company)
             if @user.save
@@ -61,9 +61,9 @@ class UsersController < ApplicationController
                   user = User.last
                   if user.update_attributes(company_id: @user_params[:company_id])
                      user = User.last
-                      redirect_to users_url, notice: 'User was successfully created.' 
+                      redirect_to users_url, notice: 'User was successfully created.'
                   else
-                      render :new 
+                      render :new
                   end
                 end
             else
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
             @company_errors="has already been taken"
             render :new
           end
-        elsif company_params[:address].present? == false# company address is invalid 
+        elsif company_params[:address].present? == false# company address is invalid
           @company_errors = "Can't be blank"
           @company_errors_address = "Can't be blank"
           render :new
@@ -83,9 +83,9 @@ class UsersController < ApplicationController
         end
       else
         if @user.save
-            redirect_to users_url, notice: 'User was successfully created.' 
+            redirect_to users_url, notice: 'User was successfully created.'
         else
-            render :new 
+            render :new
         end
       end
     end
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if session[:group]=="company" 
+      if session[:group]=="company"
         @user = User.find(params[:id])
         @company = Company.find(@user.company_id)
          if @company.update(company_params) && @user.update(user_params_for_updating)
@@ -121,10 +121,11 @@ class UsersController < ApplicationController
   end
 
   def edit_password
-      @password = User.find(params[:id]).password
+      @user = User.find(params[:id])
   end
 
   def update_password
+    byebug
     password = user_params_for_changing_password[:password]
     @user.update(password:Digest::MD5.hexdigest(password))
     redirect_to users_path
@@ -138,11 +139,11 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       begin
-          @user = User.find(params[:id])  
+          @user = User.find(params[:id])
       rescue ActiveRecord::RecordNotFound
          render "layouts/not_found.html.erb"
       else
-          @user = User.find(params[:id]) 
+          @user = User.find(params[:id])
       end
     end
 
