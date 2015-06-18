@@ -35,15 +35,32 @@
 	   <td width='40%'> <%= @user.errors[:group][0] %></td>
     </tr>
     <tbody class="company">
+<!--     <%= f.fields_for :companies, @user.company  do |company| %>
+      <tr>
+        <th><%= company.label :name , 'Company name' %></th>
+        <td><%= company.text_field :name %></td>
+        <td width='40%'> <%= @company.errors[:name][0] if @company %></td>
+      </tr>
+      <tr>
+        <th><%= company.label :address , 'Company address' %></th>
+        <td><%= company.text_field :address %></td>
+        <td width='40%'> <%= @company.errors[:address][0] if @company %></td>
+      </tr>
+      <tr>
+        <th><%= company.label :information , 'Company Info' %></th>
+        <td><%= company.text_area :information %></td>
+        <td width='40%'> <%= @company.errors[:information][0] if @company %></td>
+      </tr>
+    <% end %> -->
     <tr>
       <th><%= f.label :company, "Company Name" %></th>
       <td><%= text_field_tag'company[name]',  @params_company ? @params_company [:name] : "" %></td>
-      <td width='40%' id ="error_comp"><%= @company_errors if @company_errors %></td>
+      <td width='40%' id ="error_comp"><%= @company.errors[:name][0] if @company%></td>
     </tr>
     <tr>
       <th><%= f.label :company_address, "Company Address" %></th>
       <td><%= text_field_tag'company[address]',@params_company ? @params_company [:address] : ""%></td>
-       <td width='40%' id ="error_comp"><%= @company_errors_address if @company_errors_address %></td>
+       <td width='40%' id ="error_comp"><%=@company.errors[:address][0] if @company %></td>
     </tr>
     <tr>
       <th style="vertical-align:top"><%= f.label :company_info, "Company Info" %></th>

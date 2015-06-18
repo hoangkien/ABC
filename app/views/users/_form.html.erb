@@ -42,7 +42,7 @@
       <tr>
         <th><%= f.label :company, "Company Name" %></th>
         <td>
-          <%= if @user.group == "company" && @user.company_id
+          <%= if @user.group == "company"
                   text_field_tag'company[name]', @user.company.name
               else
                   text_field_tag'company[name]'
@@ -53,7 +53,7 @@
       <tr>
         <th><%= f.label :company_address, "Company Address" %></th>
         <td>
-          <%= if @user.group == "company" && @user.company_id
+          <%= if @user.group == "company"
                   text_field_tag'company[address]', @user.company.address
               else
                   text_field_tag'company[address]'

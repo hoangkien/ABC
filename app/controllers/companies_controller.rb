@@ -19,10 +19,10 @@ class CompaniesController < ApplicationController
   end
 
   # GET /companies/new
-  def new
-    @company = Company.new
-    @company.code = Company.generate_company_code
-  end
+  # def new
+  #   @company = Company.new
+  #   @company.code = Company.generate_company_code
+  # end
 
   # GET /companies/1/edit
   def edit
@@ -68,7 +68,7 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1.json
   def destroy
     # ApplicationController.destroy(@company,:companies_url)
-    
+
     @company.destroy
     respond_to do |format|
       format.html { redirect_to companies_url, notice: 'Company was successfully destroyed.' }

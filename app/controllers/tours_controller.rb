@@ -18,11 +18,7 @@ class ToursController < ApplicationController
         @tours = Tour.where(company_id:session[:company_id]).order(:name).page(params[:page])
       end
     end
-    # if params[:search]
-    #   @tours = Tour.search(params[:search]).order("created_at DESC").page(params[:page])
-    # else
-    #   @tours = Tour.order(:name).page(params[:page])
-    # end
+
   end
 
   # GET /tours/1
@@ -126,8 +122,8 @@ class ToursController < ApplicationController
     @traveller.tours.delete(@tour)
     #delete device in traveller
     @traveller.update(device_id:0,active:0)
-    redirect_to list_user_path(params[:tour_id]), notice:"Traveller was successfully destroyed" 
-    
+    redirect_to list_user_path(params[:tour_id]), notice:"Traveller was successfully destroyed"
+
   end
   def remove_tourguide
     @tour = Tour.find(params[:tour_id])
@@ -138,7 +134,7 @@ class ToursController < ApplicationController
     end
     #delete tourguide in tour
     @tourguide.tours.delete(@tour)
-    #update device_id and active of tourguide 
+    #update device_id and active of tourguide
     @tourguide.update(active:nil,device_id:0)
     #update status device
     redirect_to list_user_path(params[:tour_id]), alert:"Tourguide was successfully destroyed"
@@ -151,7 +147,7 @@ class ToursController < ApplicationController
         traveller = Traveller.find(params[:user_id])
         traveller.update(device_id:0)
       end
-      
+
       device = Device.find(params[:device_id])
       device.update(status:0,lat:'21.03005',lng:'105.785025')
       redirect_to list_user_path(params[:tour_id])

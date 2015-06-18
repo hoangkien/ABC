@@ -21,7 +21,7 @@
       <tr>
         <th width="1%">ID </th>
         <th width="13%">Name </th>
-        <th width="5%">Gender</th>
+        <!-- <th width="5%">Gender</th> -->
         <th width="20%">Address</th>
         <th width="10%">Phone</th>
         <th width="15%">Device Name</th>
@@ -34,13 +34,13 @@
     <%= form_tag travellers_path, :method =>'get' do %>
       <tr cellpadding="0">
         <td  width="1%"></td>
-        <td width="13%"><%= text_field_tag'fillter[name]', params[:fillter] == nil ? nil: params[:fillter][:name],style:'width:100%'%></td>
-        <td width="5%"><%= select_tag'fillter[gender]',options_for_select([ "All", "Male","Female" ],params[:fillter] ==  nil ? "All": params[:fillter][:gender]),style:'width:100%'%></td>
-        <td width="20%"><%= text_field_tag'fillter[address]',params[:fillter] == nil ? nil : params[:fillter][:address],style:'width:100%'%></td>
+        <td width="20%"><%= text_field_tag'fillter[name]', params[:fillter] == nil ? nil: params[:fillter][:name],style:'width:100%'%></td>
+<!--         <td width="5%"><%= select_tag'fillter[gender]',options_for_select([ "All", "Male","Female" ],params[:fillter] ==  nil ? "All": params[:fillter][:gender]),style:'width:100%'%></td> -->
+        <td width="22%"><%= text_field_tag'fillter[address]',params[:fillter] == nil ? nil : params[:fillter][:address],style:'width:100%'%></td>
         <td width="10%"><%= text_field_tag'fillter[phone]',params[:fillter] == nil ? nil : params[:fillter][:phone],style:'width:100%'%></td>
         <td width="15%"><%= text_field_tag'fillter[device_name]',params[:fillter] == nil ? nil : params[:fillter][:device_name],style:'width:100%'%></td>
          <td width="10%"><%= select_tag "fillter[company]", options_from_collection_for_select(@company, "id", "name",params[:fillter] == nil ? nil : params[:fillter][:company]), include_blank:"All",style:'width:100%'%></td>
-         <td width="3%"><%= select_tag'fillter[active]',options_for_select([ "All", "True","False" ],params[:fillter] ==  nil ? "All": params[:fillter][:active]),style:'width:100%'%></td>
+         <td width="3%"><%= select_tag'fillter[active]',options_for_select([ ["All","All"],["True",1],["False",0]],params[:fillter] ==  nil ? "All": params[:fillter][:active]),style:'width:100%'%></td>
         <td width="10 %">
           <%= image_submit_tag('search_button_green.ico',width:"25px",height:"25px",style:"margin-bottom:-10px")%>
           <%= link_to image_tag('undo.ico',size:'20x20')%>

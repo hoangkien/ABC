@@ -4,12 +4,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_filter  :verify_authenticity_token
   before_action :authorize,:stt
+  before_action :curent_user
   protected
+
   def authorize
-    unless User.find_by_account(session[:account])
+    unless User.find(session[:id])
        redirect_to sign_in_path, alert: "please sign in first!"
     end
   end
+
   def stt
     if params[:page]
       @stt = (params[:page].to_i-1)*4 +1
@@ -18,12 +21,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # def self.destroy(object, url)
-  #   object.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to url, notice: 'Device was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
+  def curent_user
+    curent_user ||= User.find(session[:id])
+    return curent_user
+  end
 end

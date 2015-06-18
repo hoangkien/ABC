@@ -7,11 +7,17 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @company = Company.all
-    @created_at = ["All","Day ago","Weeks ago","A month ago","Six month ago","Years ago"]
-    # @users = User.all
-    # @users = User.order(:name).page(params[:page])
+    @created_at = [["All","All"],["Day ago",Time.at(1.day.ago.to_i)],["Weeks ago",Time.at(1.week.ago.to_i)],["A month ago",Time.at(1.month.ago.to_i)],["Six month ago",Time.at(6.months.ago.to_i)],["Years ago",Time.at(1.year.ago.to_i)]]
     if params[:fillter]
-      @users = User.search(params[:fillter]).order("account DESC").page(params[:page])
+      @users = User.find_scope("account",params[:fillter][:account])
+                   .find_scope("name",params[:fillter][:name])
+                   .find_scope("address",params[:fillter][:address])
+                   .find_group(params[:fillter][:group])
+                   .find_created(params[:fillter][:created_at])
+                   .page(params[:page])
+      if params[:fillter][:company] != 'All'
+        @users = @users.joins(:company).where("companies.id = #{params[:fillter][:company]}")
+      end
     else
        @users = User.order(:account).page(params[:page]).order("account DESC").page(params[:page])
     end
@@ -32,7 +38,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if session[:group] == "company"
+    if curent_user.group == "company"
+      #don't access edit other company
       if params[:id] != session[:id].to_s
            redirect_to edit_user_path(session[:id])
       end
@@ -47,38 +54,21 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user_params = user_params
-    @user = User.new(@user_params)
     @params_company = company_params
+    @user = User.new(user_params)
+    # @params_company = company_params
       if user_params["group"] == 'company'#  group is company
-        if company_params[:name].present? == true # company name is valid
-          check_company = Company.where(name:company_params[:name]).first
-          if check_company.nil?
-            @params_company[:code] = Company.generate_company_code
-            @company = Company.new( @params_company)
-            if @user.save
-                if @company.save
-                  @user_params[:company_id] = Company.last.id
-                  user = User.last
-                  if user.update_attributes(company_id: @user_params[:company_id])
-                     user = User.last
-                      redirect_to users_url, notice: 'User was successfully created.'
-                  else
-                      render :new
-                  end
-                end
-            else
-              render :new
-            end
+        if @user.save
+          @company = @user.create_company(company_params)
+          @company[:code] = Company.generate_company_code
+          if @company.save
+            redirect_to users_url, notice: 'User was successfully created.'
           else
-            @company_errors="has already been taken"
+            User.find(@user.id).destroy
+            @user = User.new(user_params)
             render :new
           end
-        elsif company_params[:address].present? == false# company address is invalid
-          @company_errors = "Can't be blank"
-          @company_errors_address = "Can't be blank"
-          render :new
-        else#company address is valid
-          @company_errors_address = "Can't be blank"
+        else
           render :new
         end
       else
@@ -94,7 +84,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if session[:group]=="company"
+      if curent_user.group =="company"
         @user = User.find(params[:id])
         @company = Company.find(@user.company_id)
          if @company.update(company_params) && @user.update(user_params_for_updating)
@@ -125,7 +115,6 @@ class UsersController < ApplicationController
   end
 
   def update_password
-    byebug
     password = user_params_for_changing_password[:password]
     @user.update(password:Digest::MD5.hexdigest(password))
     redirect_to users_path
@@ -149,21 +138,25 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      if session[:group] == "company"
+      if curent_user.group == "company"
         params.require(:user).permit(:account, :password,:password_confirmation, :name, :address)
       else
         params.require(:user).permit(:account, :password,:password_confirmation, :name, :address, :group)
       end
     end
+
     def company_params
       params.require(:company).permit(:name,:address,:information)
     end
+
     def user_params_for_updating
       params.require(:user).permit(:name, :address, :group,:gender,:email)
     end
+
     def user_params_for_changing_password
       params.require(:user).permit( :password, :password_confirmation)
     end
+
     def params_fillter
       params.require(:fillter).permit(:account,:address,:name,:group,:company,:created_at)
     end

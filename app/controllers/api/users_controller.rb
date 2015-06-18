@@ -24,13 +24,13 @@ class Api::UsersController < ApplicationController
 							@traveller_in_tour = []
 							@traveller_list.each do |travel|
 								@device = Device.find(travel.device_id)
-								@traveller_in_tour << {     id:travel.id ,
+								@traveller_in_tour << {id:travel.id ,
 											                name: travel.name,
 											                phone: travel.phone,
 											                lat:@device.lat == nil ? "" : @device.lat,
-															lng:@device.lng == nil ? "" : @device.lng,
+																			lng:@device.lng == nil ? "" : @device.lng,
 											                address: travel.address,
-											                gender: travel.gender == false ? "male" : "female", 
+											                gender: travel.gender == false ? "male" : "female",
 											                email: travel.email,
 											                images:travel.images ? "http://"+request.host_with_port+"/assets/images_travellers/"+travel.images : "http://"+request.host_with_port+"/assets/images_travellers/no_image.png" ,
 										            }
@@ -45,13 +45,13 @@ class Api::UsersController < ApplicationController
 						@tourguide_in_tour = []
 						@tourguide_list.each do |tourguide|
 							@device = Device.find(tourguide.device_id)
-							@tourguide_in_tour << {     id:tourguide.id ,
+				    @tourguide_in_tour << { id:tourguide.id ,
 										                name: tourguide.name,
 										                phone: tourguide.phone,
 										                lat:@device.lat == nil ? "" : @device.lat,
-														lng:@device.lng == nil ? "" : @device.lng,
+																		lng:@device.lng == nil ? "" : @device.lng,
 										                address: tourguide.address,
-										                gender: tourguide.gender == false ? "male" : "female", 
+										                gender: tourguide.gender == false ? "male" : "female",
 										                email: tourguide.email,
 										                images: tourguide.images ? "http://"+request.host_with_port+"/assets/images_tourguide/"+tourguide.images : "http://"+request.host_with_port+"/assets/images_tourguide/no_image.png",
 								            }
@@ -67,6 +67,7 @@ class Api::UsersController < ApplicationController
 			render json:{status:1,message:"Missing device code"}
 		end
 	end
+
 	def update_position
 		unless params[:device_code].blank?
 			@device = Device.find_by(code:params[:device_code])
@@ -82,7 +83,7 @@ class Api::UsersController < ApplicationController
 					else
 						render json:{status:6,message:"Can't update position"}
 					end
-					
+
 				end
 			else
 				render json:{status: 107, message:"Device code  invalid"}
@@ -92,6 +93,7 @@ class Api::UsersController < ApplicationController
 		end
 
 	end
+
 	def feedback
 		# render json:{status:0,message:params_feedback[:rating_bar]}
 		unless params[:device_code].blank?
@@ -123,6 +125,7 @@ class Api::UsersController < ApplicationController
 		end
 
 	end
+
 	def push
 		if params[:device_code].blank?  or params[:message].blank?
 				render json:{ status:102 , message:"Not found information Device or message"}
@@ -159,9 +162,9 @@ class Api::UsersController < ApplicationController
 						#send GCM
 						response = gcm.send(@registration_ids,options)
 						if response[:response] == "success"
-							render json:{status:0, message:"success"}
+							render json:{ status:0, message: "success" }
 						else
-							render json:{status:108, message:"Can not send message"}
+							render json:{ status:108, message: "Can not send message" }
 						end
 			 	else#traveller
 			 			@tour = @traveller.tours.last
@@ -185,7 +188,8 @@ class Api::UsersController < ApplicationController
 			end
 		end
 	end
-	private
+
+private
 	def params_feedback
 		params.permit(:name,:tour_name,:phone,:comment)
 	end

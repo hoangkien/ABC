@@ -6,24 +6,31 @@ class TravellersController < ApplicationController
   def index
     @company = Company.all
     if session[:group] == "admin"
-      if params[:fillter]
-        @travellers = Traveller.search(params[:fillter]).order("created_at DESC").page(params[:page])
-      else
-        @travellers = Traveller.order(:name).page(params[:page])
-      end
+      @travellers = Traveller.order(:name).page(params[:page])
     else
-      @company = Company.where(id:session[:company_id])
-      if params[:fillter]
-        @travellers = Traveller.search(params[:fillter],session[:company_id]).order("created_at DESC").page(params[:page])
-      else
-        @travellers = Traveller.where(company_id:session[:company_id]).order(:name).page(params[:page])
-      end 
+      @travellers = Traveller.where(company_id:session[:company_id]).order(:name).page(params[:page])
     end
-    # if params[:search]
-    #   @travellers = Traveller.search(params[:search]).order("created_at DESC").page(params[:page])
-    # else
-    #   @travellers = Traveller.order(:name).page(params[:page])
-    # end
+
+    if params[:fillter]
+      @travellers = Traveller.fillter("travellers.name",params[:fillter][:name])
+                             .fillter("address",params[:fillter][:address])
+                             .fillter("phone",params[:fillter][:phone])
+                             .fillter_active(params[:fillter][:active]).page(params[:page]).order("created_at DESC")
+      if params[:fillter][:device_name]
+        @devices =  Device.where("name like '%#{params[:fillter][:device_name]}%'").pluck(:id).join(',')
+        return if @devices.blank?
+        @travellers = @travellers.where("device_id in (#{@devices})")
+      end
+
+      if params[:fillter][:company].nil?
+        @travellers = @travellers.joins(:company).where("companies.id = #{params[:fillter][:company]}")
+      end
+
+      if curent_user.group == "company"
+        @company = Company.where(id:session[:company_id])
+        @travellers = @travellers.where(company_id: @company.id)
+      end
+    end
   end
 
   # GET /travellers/1
@@ -33,7 +40,7 @@ class TravellersController < ApplicationController
 
   # GET /travellers/new
   def new
-    if session[:group] == "company"
+    if curent_user.group == "company"
       @devices = Device.where(status:0,company_id:session[:company_id])
     else
       @devices = Device.where(status:0)
@@ -130,7 +137,7 @@ class TravellersController < ApplicationController
       begin
          @traveller = Traveller.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        render "layouts/not_found.html.erb"   
+        render "layouts/not_found.html.erb"
       else
         @traveller = Traveller.find(params[:id])
       end

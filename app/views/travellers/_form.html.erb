@@ -6,10 +6,6 @@
     <td><%= @traveller.errors[:name][0]%></td>
   </tr>
   <tr height="30px">
-    <td><%= f.label :gender, "Gender" %></td>
-    <td><%= f.select :gender,options_for_select([["Male","0"],["Fmale","1"]],@traveller.gender)%></td>
-  </tr>
-  <tr height="30px">
     <td><%= f.label :address %></td>
     <td><%= f.text_field :address %></td>
   </tr>
@@ -26,7 +22,7 @@
   <tr height = "30px">
     <td><%= f.label :image, "Image" %></td>
     <td><%= f.file_field :images %></td>
-    <td><%= @traveller.errors[:images][0]%></td> 
+    <td><%= @traveller.errors[:images][0]%></td>
   </tr>
   <tr height="30px">
     <td><%= f.label :device_id %><br></td>
